@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siliya Electricals - Professional Appliance Repairs & Training</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatSubtle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(45, 160, 168, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(45, 160, 168, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(45, 160, 168, 0); }
+        }
+
+        /* Hero Refinements */
+        .hero-content {
+            animation: fadeInUp 1.2s ease-out both;
+        }
+
+        /* Enhanced Service Card Animations */
+        .service-card {
+            animation: fadeInUp 0.8s ease-out both;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(45, 160, 168, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(45, 160, 168, 0.15);
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Form Enhancements */
+        .repair-form-container {
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .form-group {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-control:focus + label,
+        .form-control:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.75rem;
+            color: var(--primary);
+            background: white;
+            padding: 0 4px;
+        }
+
+        .form-group:focus-within {
+            transform: translateY(-2px);
+        }
+
+        /* Training Cards */
+        .course-card {
+            animation: fadeInUp 0.8s ease-out both;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .course-card:nth-child(1) { animation-delay: 0.2s; }
+        .course-card:nth-child(2) { animation-delay: 0.4s; }
+
+        .course-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(45, 160, 168, 0.2);
+        }
+
+        .enroll-btn {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .enroll-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .enroll-btn:hover::before {
+            left: 100%;
+        }
+
+        .enroll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(45, 160, 168, 0.3);
+        }
+
+        /* Contact Cards */
+        .contact-card {
+            animation: fadeInUp 0.8s ease-out both;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:nth-child(1) { animation-delay: 0.1s; }
+        .contact-card:nth-child(2) { animation-delay: 0.2s; }
+        .contact-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(45, 160, 168, 0.1);
+        }
+
+        .contact-icon {
+            animation: floatSubtle 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+            animation-play-state: paused;
+        }
+
+        /* Navbar Enhancements */
+        .navbar {
+            animation: fadeInUp 0.6s ease-out both;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links a {
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, var(--primary), #4361ee);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Button Refinements */
+        .btn {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(45, 160, 168, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            border-radius: 50%;
+            transform: scale(0) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+            transition: all 0.6s ease-out;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 1;
+            transition: 0s;
+        }
+
+        /* Success Messages */
+        .repair-success, .enrollment-success {
+            animation: fadeInUp 0.6s ease-out both;
+            border-left: 4px solid var(--success);
+        }
+
+        /* Photo Preview */
+        .photo-preview img {
+            transition: all 0.4s ease;
+            border-radius: 12px;
+        }
+
+        .photo-preview img:hover {
+            transform: scale(1.08) rotate(1deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite, pulseGlow 2s infinite;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid var(--primary);
+        }
+
+        /* About Section Enhancements */
+        #about {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #4361ee);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px) rotateX(2deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .about-card:hover .about-img img {
+            transform: scale(1.05);
+        }
+
+        .about-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .about-info h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .about-info p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0.25rem 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-bolt"></i> Siliya Electricals
+            </a>
+            <div class="nav-links">
+                <a href="#services"><i class="fas fa-cogs"></i> Services</a>
+                <a href="./shop.html"><i class="fas fa-shopping-cart"></i> Shop</a>
+                <a href="#repair"><i class="fas fa-tools"></i> Repairs</a>
+                <a href="#training"><i class="fas fa-user-graduate"></i> Training</a>
+                <a href="#about"><i class="fas fa-users"></i> About</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="login.html" class="btn btn-outline" id="authBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Expert Appliance Repairs & Professional Training</h1>
+            <p>Trusted solutions for all your electrical needs – from quick fixes to skill-building courses.</p>
+            <div class="hero-actions">
+                <a href="#repair" class="btn btn-primary">Request Repair</a>
+                <a href="#training" class="btn btn-outline">Explore Courses</a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <section id="services">
+            <div class="section-title">
+                <h2>Our Core Services</h2>
+                <p>Delivering precision and reliability in every electrical solution</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>Appliance Repair</h3>
+                    <p>Swift, certified repairs for household and commercial appliances with genuine parts.</p>
+                    <a href="#repair" class="btn btn-primary btn-sm">Book Now</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Electrical Installation</h3>
+                    <p>Safe and efficient installations tailored to your home or business requirements.</p>
+                    <a href="#contact" class="btn btn-primary btn-sm">Get Quote</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Technical Training</h3>
+                    <p>Hands-on programs to certify and empower the next generation of electricians.</p>
+                    <a href="#training" class="btn btn-primary btn-sm">Enroll Today</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="repair">
+            <div class="section-title">
+                <h2>Submit Repair Request</h2>
+                <p>Get a free diagnosis – upload details for faster service</p>
+            </div>
+            <div class="repair-form-container">
+                <form id="repairForm" class="repair-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="device-type" class="form-control" placeholder=" " required>
+                            <label for="device-type">Device Type</label>
+                            <select id="device-type-select" style="display:none;">
+                                <option value="">Select device type</option>
+                                <option value="refrigerator">Refrigerator</option>
+                                <option value="washing-machine">Washing Machine</option>
+                                <option value="oven">Oven/Microwave</option>
+                                <option value="television">Television</option>
+                                <option value="ac">Air Conditioner</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="brand" class="form-control" placeholder=" " required>
+                            <label for="brand">Brand</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="model" class="form-control" placeholder=" " required>
+                        <label for="model">Model Number</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="issue" class="form-control" rows="4" placeholder=" " required></textarea>
+                        <label for="issue">Issue Description</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="photos">Upload Photos (Max 3)</label>
+                        <input type="file" id="photos" class="form-control" accept="image/*" multiple>
+                        <div id="photo-preview" class="photo-preview"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="reset" class="btn btn-outline">Reset</button>
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="repair-success" id="repairSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h4>Request Submitted Successfully!</h4>
+                <p>Your repair ID: <strong id="repairIdDisplay"></strong></p>
+                <p>Our team will review and contact you within 24 hours.</p>
+                <a href="#myRepairs" class="btn btn-primary">Track Status</a>
+            </div>
+        </section>
+        
+        <section id="myRepairs" class="hidden">
+            <div class="section-title">
+                <h2>My Repairs</h2>
+                <p>Monitor progress in real-time</p>
+            </div>
+            <div class="repairs-list" id="repairsList">
+                <div class="no-repairs">
+                    <i class="fas fa-search"></i>
+                    <p>No active repairs. Start one today!</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="training">
+            <div class="section-title">
+                <h2>Training Programs</h2>
+                <p>Build expertise with certified, practical courses</p>
+            </div>
+            <div class="training-courses">
+                <div class="course-card">
+                    <div class="course-img">
+                        <img src="https://i.postimg.cc/1X2vkm8M/IMG-20250523-WA0006.jpg" alt="Basic Electrical Course">
+                    </div>
+                    <div class="course-info">
+                        <h3>Basic Electrical Training</h3>
+                        <div class="course-meta">
+                            <span><i class="fas fa-clock"></i> 8 Weeks</span>
+                            <span><i class="fas fa-money-bill-wave"></i> K90,000</span>
+                        </div>
+                        <p>Master fundamentals, safety, and core repair techniques for entry-level proficiency.</p>
+                        <button class="btn btn-primary enroll-btn" data-course="basic">
+                            <i class="fas fa-arrow-right"></i> Enroll Now
+                        </button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-img">
+                        <img src="https://i.postimg.cc/ZKM591Nm/IMG-20250523-WA0050.jpg" alt="Appliance Repair Course">
+                    </div>
+                    <div class="course-info">
+                        <h3>Appliance Repair Specialist</h3>
+                        <div class="course-meta">
+                            <span><i class="fas fa-clock"></i> 12 Weeks</span>
+                            <span><i class="fas fa-money-bill-wave"></i> K80,000</span>
+                        </div>
+                        <p>Advanced diagnostics and hands-on repairs for modern appliances.</p>
+                        <button class="btn btn-primary enroll-btn" data-course="appliance">
+                            <i class="fas fa-arrow-right"></i> Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="enrollment-form-container hidden" id="enrollmentForm">
+                <form id="trainingForm">
+                    <h3>Course Enrollment</h3>
+                    <div class="form-group">
+                        <input type="text" id="course-name" class="form-control" readonly>
+                        <label for="course-name">Selected Course</label>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="full-name" class="form-control" placeholder=" " required>
+                            <label for="full-name">Full Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" class="form-control" placeholder=" " required>
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="tel" id="phone" class="form-control" placeholder=" " required>
+                            <label for="phone">Phone Number</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="education" class="form-control" required>
+                                <option value="" disabled selected>Select education level</option>
+                                <option value="secondary">Secondary School</option>
+                                <option value="diploma">Diploma</option>
+                                <option value="degree">Degree</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label for="education">Education Level</label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline cancel-enroll">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Enrollment</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="enrollment-success hidden" id="enrollmentSuccess">
+                <i class="fas fa-check-circle"></i>
+                <h4>Enrollment Confirmed!</h4>
+                <p>Your ID: <strong id="enrollmentId"></strong></p>
+                <p>Expect payment instructions and schedule via email soon.</p>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>We're here to help – connect with our team today</p>
+            </div>
+            <div class="contact-methods">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Our Location</h3>
+                    <p>Chipembere Highway, MUBAS, Blantyre, Malawi</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-primary btn-sm">View Map</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Phone Support</h3>
+                    <p>+265 887 408 386</p>
+                    <p>Mon-Fri: 8AM - 5PM</p>
+                    <a href="tel:+265887408386" class="btn btn-primary btn-sm">Call Now</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Inquiry</h3>
+                    <p>siliyaelectricals@gmail.com</p>
+                    <p>Replies within 24 hours</p>
+                    <a href="mailto:siliyaelectricals@gmail.com" class="btn btn-primary btn-sm">Send Email</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="about-card">
+                <div class="about-img">
+                    <img src="https://i.postimg.cc/MTCYKsYm/siliya.jpg" alt="Mr Pemphero Siliya">
+                </div>
+                <div class="about-info">
+                    <h3>CEO</h3>
+                    <p>Mr Pemphero Siliya</p>
+                    <p><i class="fas fa-phone"></i> +265 887 408 386<br><i class="fas fa-envelope"></i> siliyaelectrical@gmail.com</p>
+                </div>
+            </div>
+            <div class="about-card">
+                <div class="about-img">
+                    <img src="https://i.postimg.cc/BQCr8D1G/IMG-20250523-WA0011.jpg" alt="Mr Wangisa Ngala">
+                </div>
+                <div class="about-info">
+                    <h3>Technical Director</h3>
+                    <p>Mr Wangisa Ngala</p>
+                    <p><i class="fas fa-phone"></i> +265 994 346 074<br><i class="fas fa-envelope"></i> nmwangisa@gmail.com</p>
+                </div>
+            </div>
+            <div class="about-card">
+                <div class="about-img">
+                    <img src="https://i.postimg.cc/15YKY5kq/IMG-20250523-WA0014.jpg" alt="Mrs Sheirah T. Chumachao">
+                </div>
+                <div class="about-info">
+                    <h3>Business Development Director</h3>
+                    <p>Mrs Sheirah T. Chumachao</p>
+                    <p><i class="fas fa-phone"></i> +265 889 965 781<br><i class="fas fa-envelope"></i> sheirahchumachao@gmail.com</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3><i class="fas fa-bolt"></i> Siliya Electricals</h3>
+                <p>Empowering communities through expert repairs and transformative training since 2010.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#repair">Repairs</a></li>
+                    <li><a href="#training">Training</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Chipembere Hwy, Blantyre</p>
+                <p><i class="fas fa-phone"></i> +265 887 408 386</p>
+                <p><i class="fas fa-envelope"></i> siliyaelectricals@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Siliya Electricals. All rights reserved. | Designed with precision.</p>
+        </div>
+    </footer>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

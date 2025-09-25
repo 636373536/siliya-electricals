@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siliya Electricals - Admin Panel</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">    
+    <style>
+        /* Admin Specific Animations */
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Sidebar Animations */
+        .sidebar {
+            animation: slideInLeft 0.5s ease-out both;
+        }
+
+        .sidebar-menu li {
+            animation: fadeIn 0.5s ease-out both;
+            transform-origin: left center;
+        }
+
+        .sidebar-menu li:nth-child(1) { animation-delay: 0.2s; }
+        .sidebar-menu li:nth-child(2) { animation-delay: 0.3s; }
+        .sidebar-menu li:nth-child(3) { animation-delay: 0.4s; }
+        .sidebar-menu li:nth-child(4) { animation-delay: 0.5s; }
+        .sidebar-menu li:nth-child(5) { animation-delay: 0.6s; }
+        .sidebar-menu li:nth-child(6) { animation-delay: 0.7s; }
+        .sidebar-menu li:nth-child(7) { animation-delay: 0.8s; }
+
+        /* Stat Card Animations */
+        .stat-card {
+            animation: scaleIn 0.5s ease-out both;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.2s; }
+        .stat-card:nth-child(2) { animation-delay: 0.3s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
+        .stat-card:nth-child(4) { animation-delay: 0.5s; }
+        .stat-card:nth-child(5) { animation-delay: 0.6s; }
+        .stat-card:nth-child(6) { animation-delay: 0.7s; }
+
+        /* Chart Animations */
+        .chart-card {
+            animation: fadeIn 0.8s ease-out both;
+        }
+
+        .chart-card:nth-child(1) { animation-delay: 0.4s; }
+        .chart-card:nth-child(2) { animation-delay: 0.6s; }
+
+        /* Table Row Animations */
+        #repairsTableBody tr, #enrollmentsTableBody tr, #paymentsTableBody tr, #usersTableBody tr {
+            animation: fadeIn 0.5s ease-out both;
+            transform-origin: center left;
+        }
+
+        /* Button Animations */
+        .btn-primary, .btn-danger, .btn-success {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover, .btn-danger:hover, .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:active, .btn-danger:active, .btn-success:active {
+            transform: translateY(1px);
+        }
+
+        /* Modal Animations */
+        .modal {
+            animation: fadeIn 0.3s ease-out both;
+        }
+
+        .modal-content {
+            animation: scaleIn 0.3s ease-out both;
+        }
+
+        /* Tab Animations */
+        .tab-content {
+            animation: fadeIn 0.5s ease-out both;
+        }
+
+        /* Notification Animation */
+        #adminNotification {
+            animation: slideInLeft 0.3s ease-out both;
+        }
+
+        /* Hover Effects */
+        .sidebar-menu li {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu li:hover {
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li.active {
+            transform: translateX(10px);
+        }
+
+        /* Course Card Animations */
+        .course-card {
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-course, .delete-course {
+            transition: all 0.2s ease;
+        }
+
+        .edit-course:hover {
+            transform: scale(1.1);
+            color: #2da0a8;
+        }
+
+        .delete-course:hover {
+            transform: scale(1.1);
+            color: #f44336;
+        }
+
+        /* Photo Grid Animations */
+        .photos-grid img {
+            transition: all 0.3s ease;
+        }
+
+        .photos-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* Input Focus Animations */
+        .form-control:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(45, 160, 168, 0.2);
+        }
+
+        /* Status Badge Animations */
+        .badge {
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification Toast -->
+    <div id="adminNotification"></div>
+    
+    <div class="container admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Siliya Electricals</h2>
+                <p>Admin Panel</p>
+            </div>
+            
+            <div class="sidebar-menu">
+                <h3>MAIN</h3>
+                <ul>
+                    <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+                    <li data-section="repairs"><i class="fas fa-tools"></i> Repairs</li>
+                    <li data-section="training"><i class="fas fa-user-graduate"></i> Training</li>
+                    <li data-section="payments"><i class="fas fa-money-bill-wave"></i> Payments</li>
+                    <li data-section="messages"><i class="fas fa-envelope"></i> Messages</li>
+                </ul>
+                
+                <h3>REPORTS</h3>
+                <ul>
+                    <li data-section="reports"><i class="fas fa-chart-bar"></i> Analytics</li>
+                    <li data-section="users"><i class="fas fa-users"></i> Users</li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <div class="date-display" id="currentDate"></div>
+                <div class="search-container">
+                    <input type="text" placeholder="Search repairs, users..." id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="user-profile">
+                    <img src="assets/admin-avatar.jpg" alt="Admin">
+                    <span>Admin User</span>
+                </div>
+            </div>
+            
+            <!-- Dashboard Section -->
+            <div class="content-section" id="dashboardSection">
+                <h2>Dashboard Overview</h2>
+                
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Repairs</div>
+                        <div class="stat-value" id="totalRepairs">0</div>
+                        <div class="stat-label">All Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Repairs</div>
+                        <div class="stat-value" id="activeRepairs">0</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Completed Today</div>
+                        <div class="stat-value" id="completedToday">0</div>
+                        <div class="stat-label">Repairs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Revenue</div>
+                        <div class="stat-value" id="totalRevenue">K0</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Training Students</div>
+                        <div class="stat-value" id="totalStudents">0</div>
+                        <div class="stat-label">Enrolled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">New Messages</div>
+                        <div class="stat-value" id="unreadMessages">0</div>
+                        <div class="stat-label">Unread</div>
+                    </div>
+                </div>
+                
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Repairs by Status</h3>
+                        <canvas id="repairsStatusChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Monthly Revenue</h3>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>New repair request submitted by John Doe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Repairs Section -->
+            <div class="content-section hidden" id="repairsSection">
+                <div class="section-header">
+                    <h2>Repair Management</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="exportRepairsBtn">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="repairStatusFilter">Status:</label>
+                        <select id="repairStatusFilter">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="diagnosing">Diagnosing</option>
+                            <option value="repairing">Repairing</option>
+                            <option value="testing">Testing</option>
+                            <option value="completed">Completed</option>
+                            <option value="collected">Collected</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="repairDateFilter">Date Range:</label>
+                        <select id="repairDateFilter">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="repairsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Device</th>
+                                <th>Brand/Model</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="repairsTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center;">Loading repairs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Training Section -->
+            <div class="content-section hidden" id="trainingSection">
+                <div class="section-header">
+                    <h2>Training Management</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="addCourseBtn">
+                            <i class="fas fa-plus"></i> Add Course
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="enrollments">Enrollments</button>
+                    <button class="tab-btn" data-tab="courses">Courses</button>
+                </div>
+                
+                <div class="tab-content active" id="enrollmentsTab">
+                    <div class="table-container">
+                        <table id="enrollmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Student</th>
+                                    <th>Course</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Payment</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enrollmentsTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align: center;">Loading enrollments...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content hidden" id="coursesTab">
+                    <div class="courses-grid">
+                        <div class="course-card">
+                            <div class="course-header">
+                                <h3>Basic Electrical Training</h3>
+                                <div class="course-actions">
+                                    <button class="btn btn-sm btn-primary edit-course">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-course">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="course-details">
+                                <p><strong>Duration:</strong> 8 Weeks</p>
+                                <p><strong>Price:</strong> K1,500,000</p>
+                                <p><strong>Students:</strong> 24</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payments Section -->
+            <div class="content-section hidden" id="paymentsSection">
+                <h2>Payment Records</h2>
+                <div class="table-container">
+                    <table id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center;">Loading payments...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Messages Section -->
+            <div class="content-section hidden" id="messagesSection">
+                <h2>Customer Messages</h2>
+                <div class="messages-container">
+                    <div class="messages-sidebar">
+                        <div class="search-container">
+                            <input type="text" placeholder="Search messages...">
+                            <button class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="conversations-list" id="conversationsList">
+                            <!-- Conversations will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="messages-content">
+                        <div class="message-header">
+                            <h3 id="messageUserName">Select a conversation</h3>
+                        </div>
+                        <div class="message-history" id="messageHistory">
+                            <div class="no-messages">
+                                <i class="fas fa-comments"></i>
+                                <p>Select a conversation to view messages</p>
+                            </div>
+                        </div>
+                        <div class="message-input">
+                            <textarea id="messageInput" placeholder="Type your message..."></textarea>
+                            <button id="sendMessageBtn" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reports Section -->
+            <div class="content-section hidden" id="reportsSection">
+                <h2>Analytics Reports</h2>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Repairs Report</h3>
+                        <div class="report-filter">
+                            <label for="repairReportPeriod">Period:</label>
+                            <select id="repairReportPeriod">
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                                <option value="quarter">Last 3 Months</option>
+                                <option value="year">Last 12 Months</option>
+                            </select>
+                        </div>
+                        <canvas id="repairsReportChart"></canvas>
+                        <button class="btn btn-primary download-report">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Revenue Report</h3>
+                        <div class="report-filter">
+                            <label for="revenueReportPeriod">Period:</label>
+                            <select id="revenueReportPeriod">
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                                <option value="quarter">Last 3 Months</option>
+                                <option value="year">Last 12 Months</option>
+                            </select>
+                        </div>
+                        <canvas id="revenueReportChart"></canvas>
+                        <button class="btn btn-primary download-report">
+                            <i class="fa-solid fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Users Section -->
+            <div class="content-section hidden" id="usersSection">
+                <h2>User Management</h2>
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Type</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center;">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Repair Details Modal -->
+    <div class="modal" id="repairDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Repair Details</h3>
+                <button class="close-btn" id="closeRepairModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="repair-info">
+                    <div class="info-row">
+                        <span class="info-label">Repair ID:</span>
+                        <span class="info-value" id="repairId"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Customer:</span>
+                        <span class="info-value" id="repairCustomer"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Device:</span>
+                        <span class="info-value" id="repairDevice"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Brand/Model:</span>
+                        <span class="info-value" id="repairBrandModel"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Issue:</span>
+                        <span class="info-value" id="repairIssue"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Submitted:</span>
+                        <span class="info-value" id="repairDate"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status:</span>
+                        <select title="repair" id="repairStatus" class="info-value">
+                            <option value="pending">Pending</option>
+                            <option value="diagnosing">Diagnosing</option>
+                            <option value="repairing">Repairing</option>
+                            <option value="testing">Testing</option>
+                            <option value="completed">Completed</option>
+                            <option value="collected">Collected</option>
+                        </select>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Technician Notes:</span>
+                        <textarea placeholder="notes" id="repairNotes" class="info-value" rows="4"></textarea>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Amount:</span>
+                        <input placeholder="Amount" type="number" id="repairAmount" class="info-value" min="0">
+                    </div>
+                </div>
+                
+                <div class="repair-photos">
+                    <h4>Photos</h4>
+                    <div class="photos-grid" id="repairPhotos">
+                        <!-- Photos will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancelRepairBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveRepairBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Course Modal -->
+    <div class="modal" id="addCourseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Course</h3>
+                <button class="close-btn" id="closeCourseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <div class="form-group">
+                        <label for="courseName">Course Name</label>
+                        <input type="text" id="courseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDescription">Description</label>
+                        <textarea id="courseDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseDuration">Duration (Weeks)</label>
+                            <input type="number" id="courseDuration" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coursePrice">Price (K)</label>
+                            <input type="number" id="coursePrice" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseImage">Course Image</label>
+                        <input type="file" id="courseImage" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancelCourseBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveCourseBtn">Save Course</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>    
+</html>
