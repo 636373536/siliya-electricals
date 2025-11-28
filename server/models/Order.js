@@ -34,34 +34,54 @@ const orderSchema = new mongoose.Schema({
     address: {
       type: String,
       required: [true, 'Customer address is required']
+    },
+    city: {
+      type: String,
+      required: [true, 'Customer city is required']
+    },
+    region: {
+      type: String,
+      required: [true, 'Customer region is required']
     }
   },
   items: [orderItemSchema],
-  total: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
-    default: 'pending'
-  },
   paymentMethod: {
     type: String,
     enum: ['airtel_money', 'mpamba', 'paychangu', 'bank_transfer'],
-    required: [true, 'Payment method is required']
+    required: true
+  },
+  transactionId: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+    default: 'pending'
   },
   paymentStatus: {
     type: String,
-    enum: ['pending', 'completed', 'failed'],
+    enum: ['pending', 'paid', 'failed'],
     default: 'pending'
   },
-  transactionId: String,
-  createdAt: {
-    type: Date,
-    default: Date.now
+  subtotal: {
+    type: Number,
+    required: true
+  },
+  deliveryFee: {
+    type: Number,
+    default: 0
+  },
+  tax: {
+    type: Number,
+    default: 0
+  },
+  total: {
+    type: Number,
+    required: true
   }
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Order', orderSchema);

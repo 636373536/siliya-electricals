@@ -14,4 +14,4 @@ https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg  //logo
 
 
 https://i.postimg.cc/1tfWzV1s/IMG-20250523-WA0010.jpg  //training
-https://i.postimg.cc/8C8k4Mwn/IMG-20250523-WA0060.jpg certificates
+https://i.postimg.cc/8C8k4Mwn/IMG-20250523-WA0060.jpg certificates# siliya-electricals-1

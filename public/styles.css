@@ -373,7 +373,41 @@ header {
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
-
+.repairs-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .repair-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-left: 4px solid #2da0a8;
+    transition: all 0.3s ease;
+  }
+  
+  .repair-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .no-repairs {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    grid-column: 1 / -1;
+  }
+  
+  .no-repairs i {
+    font-size: 3rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+    display: block;
+  }
 /* Repair Form */
 .repair-form-container {
     background: var(--white);

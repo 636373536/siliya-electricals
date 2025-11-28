@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Siliya Electricals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .page-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 968px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkout-steps {
+            display: flex;
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .checkout-step {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .checkout-step.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .checkout-step.completed {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .checkout-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+            z-index: 1;
+        }
+
+        .checkout-step.active:not(:last-child):after {
+            border-left-color: var(--primary);
+        }
+
+        .checkout-step.completed:not(:last-child):after {
+            border-left-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .checkout-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .payment-method.selected .payment-icon {
+            color: var(--primary);
+        }
+
+        .payment-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-desc {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .payment-instructions {
+            background: #f8fafc;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .payment-instructions.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .instructions-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .instructions-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instructions-list li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .summary-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .summary-item-details {
+            flex: 1;
+        }
+
+        .summary-item-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .summary-item-quantity {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .summary-totals {
+            border-top: 2px solid var(--gray-light);
+            padding-top: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .summary-label {
+            color: var(--gray);
+        }
+
+        .summary-value {
+            font-weight: 500;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--gray-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .security-notice {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .security-icon {
+            color: var(--success);
+            font-size: 1.5rem;
+        }
+
+        .security-text {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .place-order-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .place-order-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .place-order-btn:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .notification-error {
+            background: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-steps {
+                flex-direction: column;
+            }
+            
+            .checkout-step:not(:last-child):after {
+                display: none;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 1.5rem 0;
+            }
+            
+            .checkout-section {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Siliya Electricals">
+                <span>Siliya Electricals</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="repair.html">Repairs</a></li>
+                    <li><a href="training.html">Training</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="cart-icon" onclick="window.location.href='cart.html'">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title">Checkout</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="shop.html">Shop</a>
+                <span>/</span>
+                <a href="cart.html">Cart</a>
+                <span>/</span>
+                <span>Checkout</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="checkout-steps">
+            <div class="checkout-step completed">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </div>
+            <div class="checkout-step active">
+                <i class="fas fa-user"></i> Information
+            </div>
+            <div class="checkout-step">
+                <i class="fas fa-truck"></i> Shipping
+            </div>
+            <div class="checkout-step">
+                <i class="fas fa-credit-card"></i> Payment
+            </div>
+        </div>
+
+        <div class="checkout-container">
+            <div class="checkout-form-container">
+                <form id="checkout-form">
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-circle"></i> Customer Information
+                        </h2>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="customer-name">Full Name *</label>
+                                <input type="text" id="customer-name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="customer-email">Email Address *</label>
+                                <input type="email" id="customer-email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="customer-phone">Phone Number *</label>
+                                <input type="tel" id="customer-phone" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="customer-alternate-phone">Alternate Phone</label>
+                                <input type="tel" id="customer-alternate-phone" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i> Delivery Address
+                        </h2>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="customer-address">Street Address *</label>
+                            <textarea id="customer-address" class="form-control" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="customer-city">City *</label>
+                                <input type="text" id="customer-city" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="customer-region">Region *</label>
+                                <select id="customer-region" class="form-control" required>
+                                    <option value="">Select Region</option>
+                                    <option value="central">Central Region</option>
+                                    <option value="northern">Northern Region</option>
+                                    <option value="southern">Southern Region</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="delivery-notes">Delivery Notes (Optional)</label>
+                            <textarea id="delivery-notes" class="form-control" rows="2" placeholder="Any special instructions for delivery"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card"></i> Payment Method
+                        </h2>
+                        
+                        <div class="payment-methods">
+                            <div class="payment-method" data-method="airtel_money">
+                                <div class="payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="payment-name">Airtel Money</div>
+                                <div class="payment-desc">Instant Payment</div>
+                            </div>
+                            
+                            <div class="payment-method" data-method="mpamba">
+                                <div class="payment-icon">
+                                    <i class="fas fa-sim-card"></i>
+                                </div>
+                                <div class="payment-name">Mpamba</div>
+                                <div class="payment-desc">TNM Mobile Money</div>
+                            </div>
+                            
+                            <div class="payment-method" data-method="paychangu">
+                                <div class="payment-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="payment-name">Paychangu</div>
+                                <div class="payment-desc">Digital Wallet</div>
+                            </div>
+                            
+                            <div class="payment-method" data-method="bank_transfer">
+                                <div class="payment-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="payment-name">Bank Transfer</div>
+                                <div class="payment-desc">Direct Transfer</div>
+                            </div>
+                        </div>
+                        
+                        <div id="airtel-instructions" class="payment-instructions">
+                            <h3 class="instructions-title">Airtel Money Payment Instructions</h3>
+                            <ol class="instructions-list">
+                                <li>Dial *555# on your Airtel line</li>
+                                <li>Select "Make Payment" from the menu</li>
+                                <li>Enter merchant code: <strong>SILIYAELEC</strong></li>
+                                <li>Enter amount: <strong>MK<span class="payment-amount">0.00</span></strong></li>
+                                <li>Enter your PIN to confirm the transaction</li>
+                                <li>Enter the transaction ID below once completed</li>
+                            </ol>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="airtel-transaction">Transaction ID *</label>
+                                <input type="text" id="airtel-transaction" class="form-control" required>
+                                <div class="form-note">You will receive this ID via SMS after payment</div>
+                            </div>
+                        </div>
+                        
+                        <div id="mpamba-instructions" class="payment-instructions">
+                            <h3 class="instructions-title">Mpamba Payment Instructions</h3>
+                            <ol class="instructions-list">
+                                <li>Dial *444# on your TNM line</li>
+                                <li>Select "Pay Bill" from the menu</li>
+                                <li>Enter business code: <strong>SILIYAELEC</strong></li>
+                                <li>Enter amount: <strong>MK<span class="payment-amount">0.00</span></strong></li>
+                                <li>Enter your PIN to confirm the transaction</li>
+                                <li>Enter the transaction ID below once completed</li>
+                            </ol>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="mpamba-transaction">Transaction ID *</label>
+                                <input type="text" id="mpamba-transaction" class="form-control" required>
+                                <div class="form-note">You will receive this ID via SMS after payment</div>
+                            </div>
+                        </div>
+                        
+                        <div id="paychangu-instructions" class="payment-instructions">
+                            <h3 class="instructions-title">Paychangu Payment Instructions</h3>
+                            <ol class="instructions-list">
+                                <li>Open your Paychangu app</li>
+                                <li>Select "Pay Merchant" from the menu</li>
+                                <li>Search for "Siliya Electricals" or enter code <strong>SILIYAELEC</strong></li>
+                                <li>Enter amount: <strong>MK<span class="payment-amount">0.00</span></strong></li>
+                                <li>Complete the payment using your preferred method</li>
+                                <li>Enter the transaction ID below once completed</li>
+                            </ol>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="paychangu-transaction">Transaction ID *</label>
+                                <input type="text" id="paychangu-transaction" class="form-control" required>
+                                <div class="form-note">You can find this ID in your transaction history</div>
+                            </div>
+                        </div>
+                        
+                        <div id="bank-instructions" class="payment-instructions">
+                            <h3 class="instructions-title">Bank Transfer Instructions</h3>
+                            <ol class="instructions-list">
+                                <li>Bank: <strong>National Bank of Malawi</strong></li>
+                                <li>Account Name: <strong>Siliya Electricals</strong></li>
+                                <li>Account Number: <strong>1001234567</strong></li>
+                                <li>Branch: <strong>Lilongwe Branch</strong></li>
+                                <li>Reference: <strong>Your Name + Order</strong></li>
+                                <li>Amount: <strong>MK<span class="payment-amount">0.00</span></strong></li>
+                            </ol>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="bank-reference">Reference Number *</label>
+                                <input type="text" id="bank-reference" class="form-control" required>
+                                <div class="form-note">Enter the reference number from your bank transaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="order-summary">
+                <h3 class="section-title">
+                    <i class="fas fa-receipt"></i> Order Summary
+                </h3>
+                
+                <div class="summary-items" id="checkout-items">
+                    <!-- Checkout items will be loaded here -->
+                </div>
+                
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value">MK<span id="subtotal">0.00</span></span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Delivery Fee</span>
+                        <span class="summary-value" id="delivery-fee">MK0.00</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Tax (VAT 16%)</span>
+                        <span class="summary-value">MK<span id="tax">0.00</span></span>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>MK<span id="checkout-total">0.00</span></span>
+                    </div>
+                </div>
+                
+                <div class="security-notice">
+                    <div class="security-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="security-text">
+                        <strong>Secure checkout</strong><br>
+                        Your personal information is always protected
+                    </div>
+                </div>
+                
+                <button type="submit" form="checkout-form" class="place-order-btn" id="place-order-btn">
+                    <i class="fas fa-lock"></i> Place Order
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Siliya Electricals. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Product added to cart!</span>
+    </div>
+
+    <script>
+        // Global variables
+        let cart = JSON.parse(localStorage.getItem('siliyaCart')) || [];
+        let total = 0;
+        let subtotal = 0;
+        let selectedPaymentMethod = '';
+        
+        // DOM elements
+        const checkoutItemsContainer = document.getElementById('checkout-items');
+        const checkoutTotalElement = document.getElementById('checkout-total');
+        const subtotalElement = document.getElementById('subtotal');
+        const deliveryFeeElement = document.getElementById('delivery-fee');
+        const taxElement = document.getElementById('tax');
+        const cartCount = document.querySelector('.cart-count');
+        const paymentAmounts = document.querySelectorAll('.payment-amount');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentInstructions = document.querySelectorAll('.payment-instructions');
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        
+        // Initialize the checkout
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutItems();
+            updateCartCount();
+            
+            // Set up payment method selection
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', handlePaymentMethodSelect);
+            });
+            
+            // Set up form submission
+            document.getElementById('checkout-form').addEventListener('submit', handleFormSubmission);
+        });
+        
+        // Render checkout items
+        function renderCheckoutItems() {
+            if (cart.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+            
+            checkoutItemsContainer.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                return `
+                    <div class="summary-item">
+                        <img src="${item.image}" alt="${item.name}" class="summary-item-image">
+                        <div class="summary-item-details">
+                            <div class="summary-item-name">${item.name}</div>
+                            <div class="summary-item-price">MK${item.price.toLocaleString()}</div>
+                            <div class="summary-item-quantity">Qty: ${item.quantity}</div>
+                        </div>
+                        <div class="summary-item-total">MK${itemTotal.toLocaleString()}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Calculate totals
+            const deliveryFee = subtotal > 50000 ? 0 : 2500;
+            const tax = subtotal * 0.16; // 16% VAT
+            total = subtotal + deliveryFee + tax;
+            
+            // Update UI
+            subtotalElement.textContent = subtotal.toLocaleString();
+            deliveryFeeElement.textContent = deliveryFee === 0 ? 'Free' : 'MK' + deliveryFee.toLocaleString();
+            taxElement.textContent = tax.toLocaleString();
+            checkoutTotalElement.textContent = total.toLocaleString();
+            
+            // Update payment amount displays
+            paymentAmounts.forEach(element => {
+                element.textContent = total.toLocaleString();
+            });
+        }
+        
+        // Handle payment method selection
+        function handlePaymentMethodSelect(e) {
+            const method = this.dataset.method;
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            paymentMethods.forEach(m => m.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // Show appropriate instructions
+            paymentInstructions.forEach(instruction => {
+                instruction.classList.remove('active');
+            });
+            document.getElementById(`${method}-instructions`).classList.add('active');
+            
+            // Enable place order button
+            placeOrderBtn.disabled = false;
+        }
+        
+        // Handle form submission
+        function handleFormSubmission(e) {
+            e.preventDefault();
+            
+            if (!selectedPaymentMethod) {
+                showNotification('Please select a payment method', true);
+                return;
+            }
+            
+            // Get transaction ID based on payment method
+            let transactionId = '';
+            switch (selectedPaymentMethod) {
+                case 'airtel_money':
+                    transactionId = document.getElementById('airtel-transaction').value;
+                    break;
+                case 'mpamba':
+                    transactionId = document.getElementById('mpamba-transaction').value;
+                    break;
+                case 'paychangu':
+                    transactionId = document.getElementById('paychangu-transaction').value;
+                    break;
+                case 'bank_transfer':
+                    transactionId = document.getElementById('bank-reference').value;
+                    break;
+            }
+            
+            if (!transactionId) {
+                showNotification('Please enter your transaction/reference ID', true);
+                return;
+            }
+            
+            // Show loading state
+            placeOrderBtn.innerHTML = '<div class="loading-spinner"></div> Processing...';
+            placeOrderBtn.disabled = true;
+            
+            const orderData = {
+                customer: {
+                    name: document.getElementById('customer-name').value,
+                    email: document.getElementById('customer-email').value,
+                    phone: document.getElementById('customer-phone').value,
+                    alternatePhone: document.getElementById('customer-alternate-phone').value,
+                    address: document.getElementById('customer-address').value,
+                    city: document.getElementById('customer-city').value,
+                    region: document.getElementById('customer-region').value,
+                    deliveryNotes: document.getElementById('delivery-notes').value
+                },
+                items: cart.map(item => ({
+                    product: item.id,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                paymentMethod: selectedPaymentMethod,
+                transactionId: transactionId,
+                subtotal: subtotal,
+                deliveryFee: subtotal > 50000 ? 0 : 2500,
+                tax: subtotal * 0.16,
+                total: total
+            };
+            
+            // Submit order to server
+            fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Clear cart
+                    localStorage.removeItem('siliyaCart');
+                    
+                    // Show success message
+                    showNotification(`Order placed successfully! Your order ID is: ${data.data.order._id}`);
+                    
+                    // Redirect to confirmation page
+                    setTimeout(() => {
+                        window.location.href = 'order-confirmation.html?id=' + data.data.order._id;
+                    }, 2000);
+                } else {
+                    placeOrderBtn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+                    placeOrderBtn.disabled = false;
+                    showNotification('Error placing order. Please try again.', true);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                placeOrderBtn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+                placeOrderBtn.disabled = false;
+                showNotification('Error placing order. Please try again.', true);
+            });
+        }
+        
+        // Update cart count indicator
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        // Show notification
+        function showNotification(message, isError = false) {
+            notificationText.textContent = message;
+            notification.className = `notification ${isError ? 'notification-error' : ''}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

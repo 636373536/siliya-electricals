@@ -1,8 +1,13 @@
+// server/routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const User = require('../models/User');
+const { protect, adminOnly } = require('../middleware/auth');
 
-router.post('/register', userController.register);
-// Add other routes as needed
+// GET ALL USERS (Admin)
+router.get('/', protect, adminOnly, async (req, res) => {
+  const users = await User.find().select('-password').sort({ createdAt: -1 });
+  res.json(users);
+});
 
 module.exports = router;

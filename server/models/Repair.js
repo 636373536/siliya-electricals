@@ -1,52 +1,58 @@
 const mongoose = require('mongoose');
 
-const repairSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
+const repairSchema = new mongoose.Schema({
+  deviceType: { 
+    type: String, 
+    required: [true, 'Please provide device type'],
+    trim: true 
   },
-  deviceType: {
-    type: String,
-    required: true
+  brand: { 
+    type: String, 
+    trim: true 
   },
-  brand: {
-    type: String,
-    required: true
+  model: { 
+    type: String, 
+    trim: true 
   },
-  model: {
-    type: String,
-    required: true
+  issue: { 
+    type: String, 
+    required: [true, 'Please describe the issue'],
+    trim: true 
   },
-  issue: {
-    type: String,
-    required: true
-  },
-  status: {
-    type: String,
-    required: true,
-    enum: ['pending', 'diagnosing', 'repairing', 'testing', 'completed', 'collected'],
-    default: 'pending'
-  },
-  photos: [{
-    type: String,
-    validate: {
-      validator: function(v) {
-        return v.endsWith('.jpg') || v.endsWith('.png') || v.endsWith('.jpeg');
-      },
-      message: 'Photo must be a valid image URL'
-    }
+  photos: [{ 
+    type: String 
   }],
-  technicianNotes: {
+  customer: { 
     type: String,
     trim: true
   },
+  userId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User', 
+    required: true 
+  },
+  status: { 
+    type: String, 
+    enum: ['pending', 'in-progress', 'completed', 'cancelled'], 
+    default: 'pending' 
+  },
+  technicianNotes: {
+    type: String,
+    default: ''
+  },
   amount: {
     type: Number,
-    min: 0
+    default: 0
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now,
+    immutable: true
+  },
+  updatedAt: { 
+    type: Date, 
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
 
 module.exports = mongoose.model('Repair', repairSchema);
