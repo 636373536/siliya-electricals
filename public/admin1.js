@@ -1,5 +1,8 @@
 // admin1.js – COMPLETE ES MODULE WITH ALL FUNCTIONS
-const BASE_URL = 'http://localhost:5000';
+// ✅ FIX: Auto-detect based on environment
+const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : window.location.origin;
 
 const els = {
   toast: document.getElementById('toast'),

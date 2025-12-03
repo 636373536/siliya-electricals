@@ -1,9 +1,9 @@
 // app.js - COMPLETE FILE WITH ALL FUNCTIONS
 
-const BASE_URL = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1'
+const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000'
-  : 'https://yourdomain.com'; // ← Change to your real domain when deploying
-
+  : window.location.origin; // ✅ Auto-detect production URL
+  
 let currentUser = null;
 let authToken = null;
 let socket = null;
