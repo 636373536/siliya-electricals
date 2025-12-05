@@ -380,31 +380,22 @@
       color: #aaa;
     }
 
-    /* Responsive Optimizations */
-    @media (max-width: 992px) {
-      .container { width:100%; min-height:auto; }
-      .form-container { width:100%; padding:0 20px; }
-      .toggle-container { display:none; }
-    }
-
+    /* Mobile Fixes */
     @media (max-width: 768px) {
-      body { padding:10px; }
-      .container { border-radius:20px; }
-      h1 { font-size:1.8rem; }
-      input { padding:10px 15px; font-size:0.9rem; }
-      button { padding:10px; font-size:0.95rem; }
-      .social-icons a { width:35px; height:35px; font-size:1rem; }
-      .forgot-content { padding:20px; }
-      .connection-status { top:10px; left:10px; padding:6px 12px; font-size:12px; }
-      .debug-toggle { bottom:15px; right:15px; width:45px; height:45px; font-size:1.2rem; }
-      .debug-panel { bottom:65px; right:15px; padding:12px; max-width:320px; font-size:11px; }
-      .debug-panel button { padding:5px 8px; font-size:10px; margin:4px 2px 0; }
-    }
-
-    @media (max-width: 480px) {
-      .social-icons { gap:5px; }
-      .forgot-content { width:95%; }
-      .custom-alert { top:10px; right:10px; padding:12px 20px; font-size:0.85rem; gap:8px; }
+      .container { min-height: auto; width: 100%; }
+      .form-container { width: 100%; padding: 0 20px; position: relative; }
+      .toggle-container { display: none !important; }  /* Hide toggle on mobile to prevent cover */
+      body { padding: 10px; }
+      .container { border-radius: 20px; }
+      .form-container { padding: 0 20px; }
+      .social-icons { gap: 8px; }
+      .social-icons a { width: 35px; height: 35px; font-size: 1rem; }
+      .connection-status { top: 10px; left: 10px; padding: 6px 12px; font-size: 12px; }
+      .forgot-content { padding: 20px; }
+      .custom-alert { top: 10px; right: 10px; padding: 12px 20px; font-size: 0.9rem; gap: 8px; }
+      .debug-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.3rem; }
+      .debug-panel { bottom: 70px; right: 15px; padding: 12px; max-width: 320px; font-size: 11px; }
+      .debug-panel button { padding: 5px 8px; font-size: 10px; margin: 4px 2px 0; }
     }
   </style>
 </head>
