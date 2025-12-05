@@ -4,488 +4,299 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Siliya Electricals - Login</title>
+
   <link rel="icon" type="image/png" href="https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+  <style>
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
     }
 
     body {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/h40z2DJ1/9a976c906aab6ab0eec7deda5a55233e.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url("https://i.postimg.cc/h40z2DJ1/9a976c906aab6ab0eec7deda5a55233e.jpg") center/cover no-repeat;
+      background-attachment: fixed;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
       padding: 20px;
     }
 
     .container {
-      background: white;
+      background: #fff;
       border-radius: 30px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      position: relative;
-      overflow: hidden;
       width: 768px;
       max-width: 100%;
       min-height: 520px;
-      transition: all 0.6s ease-in-out;
+      overflow: hidden;
+      position: relative;
+      transition: 0.5s;
     }
 
-    .container.active { transform: scale(1.02); }
-
+    /* Form containers */
     .form-container {
       position: absolute;
       top: 0;
       height: 100%;
-      transition: all 0.6s ease-in-out;
       width: 50%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 0 40px;
+      transition: 0.6s ease-in-out;
     }
 
     .sign-in { left: 0; z-index: 2; }
-    .container.active .sign-in { transform: translateX(100%); opacity: 0; }
-
     .sign-up { left: 0; opacity: 0; z-index: 1; }
-    .container.active .sign-up { transform: translateX(100%); opacity: 1; z-index: 5; }
 
-    .toggle-container {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 50%;
-      height: 100%;
-      overflow: hidden;
-      transition: all 0.6s ease-in-out;
-      border-radius: 150px 0 0 100px;
-      z-index: 1000;
+    .container.active .sign-in {
+      transform: translateX(100%);
+      opacity: 0;
     }
 
-    .container.active .toggle-container {
-      transform: translateX(-100%);
-      border-radius: 0 150px 100px 0;
+    .container.active .sign-up {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+
+    /* Toggle Section */
+    .toggle-container {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 50%; height: 100%;
+      overflow: hidden;
+      transition: 0.6s ease-in-out;
+      z-index: 1000;
     }
 
     .toggle {
       background: linear-gradient(135deg, #14194e, #2da0a8);
-      height: 100%;
+      width: 200%; height: 100%;
       color: white;
-      position: relative;
       left: -100%;
-      height: 100%;
-      width: 200%;
-      transform: translateX(0);
-      transition: all 0.6s ease-in-out;
+      position: relative;
+      transition: 0.6s ease-in-out;
     }
 
-    .container.active .toggle { transform: translateX(50%); }
+    .container.active .toggle {
+      transform: translateX(50%);
+    }
 
     .toggle-panel {
       position: absolute;
-      width: 50%;
-      height: 100%;
+      width: 50%; height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 30px;
       text-align: center;
-      top: 0;
-      transform: translateX(0);
-      transition: all 0.6s ease-in-out;
+      padding: 0 30px;
     }
 
-    .toggle-left { transform: translateX(-200%); }
-    .container.active .toggle-left { transform: translateX(0); }
+    .toggle-left {
+      transform: translateX(-200%);
+    }
+    .container.active .toggle-left {
+      transform: translateX(0);
+    }
 
-    .toggle-right { right: 0; transform: translateX(0); }
-    .container.active .toggle-right { transform: translateX(200%); }
+    .toggle-right {
+      right: 0;
+    }
+    .container.active .toggle-right {
+      transform: translateX(200%);
+    }
 
-    h1 { font-size: 2rem; margin-bottom: 1rem; animation: fadeInUp 0.6s ease-out; }
-    p { font-size: 14px; line-height: 1.6; margin: 15px 0; opacity: 0.9; }
+    h1 { margin-bottom: 10px; }
+    p { font-size: 14px; opacity: 0.9; }
+
+    input {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      background: #eee;
+      margin: 8px 0;
+      border-radius: 50px;
+    }
+
+    button {
+      background: #2da0a8;
+      color: #fff;
+      border: none;
+      padding: 12px 45px;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    button:hover { background: #1a6b70; }
+
+    button.hidden {
+      background: transparent;
+      border: 2px solid #fff;
+    }
+
+    a { text-decoration: none; }
 
     .social-icons {
-      margin: 20px 0;
       display: flex;
       gap: 10px;
+      margin: 15px 0;
     }
 
     .social-icons a {
-      width: 40px;
-      height: 40px;
-      border: 1px solid #ddd;
+      width: 40px; height: 40px;
       border-radius: 50%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      border: 1px solid #ddd;
       color: #333;
-      transition: all 0.3s;
+      transition: 0.3s;
     }
 
     .social-icons a:hover {
       background: #2da0a8;
       color: white;
-      transform: translateY(-3px) rotate(360deg);
-      box-shadow: 0 5px 15px rgba(45,160,168,0.4);
     }
 
-    input {
-      background: #eee;
-      border: none;
-      padding: 12px 20px;
-      margin: 8px 0;
-      width: 100%;
-      border-radius: 50px;
-      font-size: 14px;
-      transition: all 0.3s;
-      outline: none;
-    }
-
-    input:focus {
-      box-shadow: 0 0 0 3px rgba(45,160,168,0.3);
-      transform: scale(1.02);
-    }
-
-    button {
-      background: #2da0a8;
-      color: white;
-      border: none;
-      padding: 12px 45px;
-      border-radius: 50px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button:hover {
-      background: #1a6b70;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(45,160,168,0.4);
-    }
-
-    button.hidden {
-      background: transparent;
-      border: 2px solid white;
-      color: white;
-    }
-
-    .error-message {
-      color: #e74c3c;
-      font-size: 12px;
-      margin: 5px 0;
-      display: none;
-      animation: shake 0.5s;
-    }
-
-    .shake { animation: shake 0.5s; }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .btn-loading::after {
-      content: "";
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      margin-left: 10px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
-
-    .loading-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .loading-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 1s ease-in-out infinite;
-    }
-
-    .custom-alert {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 25px;
-      border-radius: 12px;
-      color: white;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10000;
-      transform: translateX(120%);
-      transition: transform 0.4s ease-out;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
-
-    .custom-alert.show { transform: translateX(0); }
-    .custom-alert.success { background: #4CAF50; }
-    .custom-alert.error { background: #f44336; }
-    .custom-alert.warning { background: #ff9800; }
-
-    .custom-alert .close-btn {
-      margin-left: 15px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .connection-status {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      padding: 8px 15px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 10000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .connection-status.connected { background: #4CAF50; color: white; }
-    .connection-status.disconnected { background: #f44336; color: white; }
-
-    .debug-toggle, .debug-panel {
-      position: fixed;
-      z-index: 10001;
-    }
-
-    .debug-toggle {
-      bottom: 20px;
-      right: 20px;
-      background: #2da0a8;
-      color: white;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(45,160,168,0.4);
-    }
-
-    .debug-panel {
-      bottom: 80px;
-      right: 20px;
-      background: rgba(0,0,0,0.9);
-      color: white;
-      padding: 15px;
-      border-radius: 12px;
-      max-width: 380px;
-      font-size: 12px;
-      display: none;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
-
-    .debug-panel button {
-      background: #2da0a8;
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      margin: 5px 2px 0;
-      border-radius: 6px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    /* Forgot Password Modal */
-    .forgot-modal {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10002;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .forgot-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .forgot-content {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      animation: modalPop 0.4s ease-out;
-    }
-
-    @keyframes modalPop {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .forgot-content h2 { margin-bottom: 15px; color: #2da0a8; }
-    .forgot-content input { margin: 15px 0; }
-    .forgot-content button { width: 100%; margin-top: 10px; }
-    .close-forgot { 
-      position: absolute; 
-      top: 15px; 
-      right: 20px; 
-      font-size: 1.5rem; 
-      cursor: pointer; 
-      color: #aaa;
-    }
-
-    /* Mobile Fixes */
+    /* 👉 MOBILE RESPONSIVE FIX (MAIN) */
     @media (max-width: 768px) {
-      .container { min-height: auto; width: 100%; }
-      .form-container { width: 100%; padding: 0 20px; position: relative; }
-      .toggle-container { display: none !important; }  /* Hide toggle on mobile to prevent cover */
       body { padding: 10px; }
-      .container { border-radius: 20px; }
-      .form-container { padding: 0 20px; }
-      .social-icons { gap: 8px; }
-      .social-icons a { width: 35px; height: 35px; font-size: 1rem; }
-      .connection-status { top: 10px; left: 10px; padding: 6px 12px; font-size: 12px; }
-      .forgot-content { padding: 20px; }
-      .custom-alert { top: 10px; right: 10px; padding: 12px 20px; font-size: 0.9rem; gap: 8px; }
-      .debug-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.3rem; }
-      .debug-panel { bottom: 70px; right: 15px; padding: 12px; max-width: 320px; font-size: 11px; }
-      .debug-panel button { padding: 5px 8px; font-size: 10px; margin: 4px 2px 0; }
+
+      .container {
+        width: 100%;
+        min-height: auto;
+        padding: 25px 0;
+        border-radius: 20px;
+      }
+
+      /* ALL forms take full width */
+      .form-container {
+        width: 100% !important;
+        position: relative !important;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: 5 !important;
+        padding: 0 20px;
+      }
+
+      .sign-in,
+      .sign-up {
+        transform: none !important;
+      }
+
+      /* Remove toggle from mobile */
+      .toggle-container {
+        display: none !important;
+      }
+
+      h1 { font-size: 1.7rem; }
+      button { width: 100%; }
+      input { font-size: 14px; }
+    }
+
+    /* 👉 TABLET FIX */
+    @media (min-width: 769px) and (max-width: 1020px) {
+      .container { width: 90%; min-height: 600px; }
+      .form-container { padding: 0 30px; }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Connection Status -->
-  <div class="connection-status disconnected" id="connectionStatus">Backend: Checking...</div>
+  <!-- BACKEND STATUS -->
+  <div id="connectionStatus" style="
+    position: fixed; top: 15px; left: 15px;
+    background: #f44336; color: #fff;
+    padding: 8px 15px; border-radius: 50px; font-size: 12px;
+    z-index: 10000;
+  ">Backend: Checking...</div>
 
-  <!-- Main Container -->
+  <!-- MAIN LOGIN BOX -->
   <div class="container" id="container">
-    <!-- Sign Up Form -->
+
+    <!-- SIGN UP -->
     <div class="form-container sign-up">
       <form id="signupForm">
         <h1>Create Account</h1>
+
         <div class="social-icons">
-          <a href="#" class="icon"><i class="fab fa-google"></i></a>
-          <a href="#" class="icon"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="icon"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
         </div>
+
         <span>or use your email</span>
+
         <input type="text" placeholder="Full Name" id="signupName" required />
         <input type="email" placeholder="Email" id="signupEmail" required />
         <input type="password" placeholder="Password" id="signupPassword" required />
         <input type="password" placeholder="Confirm Password" id="signupConfirmPassword" required />
+
         <div class="error-message" id="signupError"></div>
+
         <button type="submit">Sign Up</button>
       </form>
     </div>
 
-    <!-- Sign In Form -->
+    <!-- SIGN IN -->
     <div class="form-container sign-in">
       <form id="loginForm">
         <h1>Sign In</h1>
+
         <div class="social-icons">
-          <a href="#" class="icon"><i class="fab fa-google"></i></a>
-          <a href="#" class="icon"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="icon"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
         </div>
+
         <span>or use your account</span>
+
         <input type="email" placeholder="Email" id="loginEmail" required />
         <input type="password" placeholder="Password" id="loginPassword" required />
+
         <div class="error-message" id="loginError"></div>
-        <a href="#" id="forgotLink" style="color:#2da0a8; font-weight:500;">Forgot your password?</a>
+
+        <a href="#" id="forgotLink" style="color:#2da0a8;font-weight:500;">Forgot your password?</a>
+
         <button type="submit">Sign In</button>
       </form>
     </div>
 
-    <!-- Toggle Panels -->
+    <!-- TOGGLE SECTION (PC + TABLET ONLY) -->
     <div class="toggle-container">
       <div class="toggle">
+
         <div class="toggle-panel toggle-left">
           <h1>Welcome Back!</h1>
-          <p>Enter your details to access your account</p>
+          <p>Login to your account</p>
           <button class="hidden" id="login">Sign In</button>
         </div>
+
         <div class="toggle-panel toggle-right">
           <h1>Hello, Friend!</h1>
-          <p>Register to start your journey with us</p>
+          <p>Create an account to get started</p>
           <button class="hidden" id="register">Sign Up</button>
         </div>
+
       </div>
     </div>
+
   </div>
 
-  <!-- Forgot Password Modal -->
-  <div class="forgot-modal" id="forgotModal">
-    <div class="forgot-content">
-      <span class="close-forgot" id="closeForgot">&times;</span>
-      <h2>Reset Password</h2>
-      <p>Enter your email and we'll send you a reset link.</p>
-      <input type="email" placeholder="Your Email" id="resetEmail" required />
-      <div class="error-message" id="resetError"></div>
-      <button id="sendResetBtn">Send Reset Link</button>
-    </div>
-  </div>
-
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-  </div>
-
-  <!-- Debug Panel -->
-  <button class="debug-toggle" id="debugToggle"><i class="fas fa-bug"></i></button>
-  <div class="debug-panel" id="debugPanel">
-    <h3>Debug Log</h3>
-    <div id="debugInfo">Ready.</div>
-    <button onclick="clearStorage()">Clear Storage</button>
-    <button onclick="checkBackendConnection()">Check Backend</button>
-  </div>
-
+  <!-- JS -->
   <script src="./app.js"></script>
+
 </body>
 </html>
