@@ -19,7 +19,6 @@
                 transform: translateY(0);
             }
         }
-        @keyframes fadeInUp { from {opacity:0;transform:translateY(30px);} to {opacity:1;transform:translateY(0);} }
         @keyframes floatSubtle {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -410,7 +409,36 @@
   transition: transform 0.3s;
 }
 .repair-card:hover { transform: translateY(-5px); }
-    </style>
+
+    /* Responsive Optimizations */
+    @media (max-width: 992px) {
+      .services-grid, .training-courses, .contact-methods, .about-grid { grid-template-columns:1fr 1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr; text-align:center; }
+      .nav-links { flex-wrap:wrap; gap:1rem; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding:4rem 1rem; }
+      .hero h1 { font-size:2.5rem; }
+      .hero p { font-size:1.1rem; }
+      .services-grid, .training-courses, .contact-methods, .about-grid { grid-template-columns:1fr; }
+      .section-title h2 { font-size:1.8rem; }
+      .repair-form-container, .enrollment-form-container { padding:1.5rem; }
+      .repairs-grid { grid-template-columns:1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size:2rem; }
+      .hero p { font-size:1rem; }
+      .btn { padding:0.8rem 1.5rem; font-size:0.9rem; }
+      .service-card, .course-card, .contact-card, .about-card { padding:1.5rem; }
+      .form-control { padding:0.8rem; font-size:0.9rem; }
+      .social-icons { gap:0.5rem; }
+      .social-icons a { width:35px; height:35px; font-size:0.9rem; }
+      .footer { padding:3rem 1rem 1rem; }
+    }
+  </style>
 </head>
 <body>
     <header>
@@ -535,16 +563,15 @@
             </div>
         </section>
         
-<!-- Replace entire "myRepairs" section with this: -->
-<section id="myRepairs" class="hidden">
-    <div class="section-title">
-      <h2>My Repair History</h2>
-      <p>Track all your appliance repairs in real-time</p>
-    </div>
-    <div id="myRepairsList" class="repairs-grid">
-      <p style="text-align:center;color:#999;">Loading your repairs...</p>
-    </div>
-  </section>
+        <section id="myRepairs" class="hidden">
+            <div class="section-title">
+              <h2>My Repair History</h2>
+              <p>Track all your appliance repairs in real-time</p>
+            </div>
+            <div id="myRepairsList" class="repairs-grid">
+              <p style="text-align:center;color:#999;">Loading your repairs...</p>
+            </div>
+          </section>
         <section id="training">
             <div class="section-title">
                 <h2>Training Programs</h2>
@@ -584,15 +611,6 @@
                     </div>
                 </div>
             </div>
-            <section id="myRepairs">
-                <div class="section-title">
-                  <h2>My Repair History</h2>
-                  <p>Track all your appliance repairs in real-time</p>
-                </div>
-                <div id="myRepairsList" class="repairs-grid">
-                  <p>Loading your repairs...</p>
-                </div>
-              </section>
             <div class="enrollment-form-container hidden" id="enrollmentForm">
                 <form id="trainingForm">
                     <h3>Course Enrollment</h3>

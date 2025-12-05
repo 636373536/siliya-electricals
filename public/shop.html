@@ -2,246 +2,295 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shop - Siliya Electricals | Premium Electronics in Malawi</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="styleslll.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop - Siliya Electricals | Buy TVs, Fridges, Fans & More</title>
+  <link rel="icon" href="https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0e174e;
-      --primary-dark: #1d4ed8;
+      --primary: #2da0a8;
+      --primary-dark: #1a6b70;
       --secondary: #f59e0b;
-      --success: #10b981;
-      --danger: #ef4444;
-      --gray: #64748b;
-      --gray-light: #e2e8f0;
+      --dark: #0f172a;
       --light: #f8fafc;
+      --gray: #64748b;
+      --border: #e2e8f0;
       --radius: 16px;
-      --shadow: 0 10px 25px rgba(0,0,0,0.08);
-      --transition: all 0.3s ease;
+      --shadow: 0 10px 30px rgba(0,0,0,0.1);
+      --transition: all 0.35s ease;
     }
-    body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; margin: 0; padding: 0; }
-    header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-    .header-content { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 12px; }
-    .logo img { height: 50px; }
-    .cart-icon { font-size: 1.5rem; cursor: pointer; position: relative; color: var(--primary); }
-    .cart-count { position: absolute; top: -8px; right: -10px; background: var(--secondary); color: white; font-size: 0.7rem; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-weight: bold; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Inter', sans-serif; background:var(--light); color:var(--dark); line-height:1.6; }
 
-    .hero-section { background: linear-gradient(135deg, var(--primary), #1e3a8a); color: white; text-align: center; padding: 5rem 1rem; }
-    .hero-title { font-size: 3.2rem; margin: 0 0 1rem; }
-    .hero-subtitle { font-size: 1.3rem; opacity: 0.9; max-width: 700px; margin: 0 auto 2rem; }
-    .search-container { max-width: 600px; margin: 0 auto; position: relative; }
-    .search-input { width: 100%; padding: 1.1rem 4rem 1.1rem 1.5rem; border-radius: 50px; border: none; font-size: 1.1rem; box-shadow: var(--shadow); }
-    .search-button { position: absolute; right: 8px; top: 8px; background: var(--secondary); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; }
-
-    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-    .section-title { text-align: center; font-size: 2.2rem; margin: 3rem 0 2rem; color: var(--primary); }
-
-    .filter-section {
-      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2rem; padding: 1.5rem;
-      background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+    /* Navbar */
+    .navbar {
+      position:sticky; top:0; background:white; backdrop-filter:blur(12px); z-index:100;
+      padding:1rem 2rem; box-shadow:0 2px 20px rgba(0,0,0,0.1);
     }
-    .filter-select { padding: 0.8rem 1.2rem; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 1rem; }
+    .nav-container {
+      max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+    }
+    .logo { font-size:1.8rem; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:12px; }
+    .logo img { height:48px; border-radius:8px; }
+    .nav-links { display:flex; gap:2rem; align-items:center; flex-wrap:wrap; }
+    .nav-links a { color:var(--dark); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .nav-links a:hover { color:var(--primary); }
+    .cart-icon {
+      position:relative; font-size:1.5rem; color:var(--primary); cursor:pointer;
+    }
+    .cart-count {
+      position:absolute; top:-8px; right:-10px; background:var(--secondary); color:white;
+      font-size:0.75rem; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-weight:bold;
+    }
+    .mobile-toggle { display:none; font-size:1.8rem; cursor:pointer; }
 
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #141e30, #243b55); color:white; text-align:center;
+      padding:5rem 1rem; border-radius:0 0 0 var(--radius) var(--radius);
+    }
+    .hero h1 { font-size:3rem; margin-bottom:1rem; }
+    .hero p { font-size:1.3rem; max-width:700px; margin:0 auto 2rem; opacity:0.9; }
+    .search-container {
+      max-width:600px; margin:0 auto; position:relative;
+    }
+    .search-input {
+      width:100%; padding:1rem 4rem 1rem 1.5rem; border-radius:50px; border:none;
+      font-size:1.1rem; box-shadow:var(--shadow);
+    }
+    .search-btn {
+      position:absolute; right:8px; top:8px; background:var(--secondary); color:white;
+      border:none; width:48px; height:48px; border-radius:50%; cursor:pointer;
+    }
+
+    .container { max-width:1400px; margin:2rem auto; padding:0 1rem; }
+
+    /* Filters */
+    .filters {
+      display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:2rem 0;
+      padding:1.5rem; background:white; border-radius:var(--radius); box-shadow:var(--shadow);
+    }
+    .filter-select {
+      padding:0.8rem 1.2rem; border:1px solid var(--border); border-radius:8px; font-size:1rem;
+    }
+
+    /* Products Grid */
     .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+      gap:2rem;
+      margin:2rem 0;
     }
-
     .product-card {
-      background: white;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      position: relative;
+      background:white; border-radius:var(--radius); overflow:hidden;
+      box-shadow:var(--shadow); transition:var(--transition); position:relative;
     }
-    .product-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-
+    .product-card:hover {
+      transform:translateY(-12px); box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    }
     .product-badge {
-      position: absolute; top: 12px; left: 12px; background: var(--secondary); color: white;
-      padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.8rem; font-weight: bold; z-index: 5;
+      position:absolute; top:12px; left:12px; background:var(--secondary); color:white;
+      padding:0.4rem 0.9rem; border-radius:50px; font-size:0.8rem; font-weight:600; z-index:5;
     }
-    .out-of-stock-badge { background: var(--danger)!important; }
+    .out-of-stock { background:#ef4444 !important; }
+    .featured { background:#10b981 !important; }
 
-    .product-image-container { position: relative; height: 250px; overflow: hidden; }
-    .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-    .product-card:hover .product-image { transform: scale(1.1); }
-
-    .product-info { padding: 1.5rem; }
-    .product-category { color: var(--primary); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-    .product-name { font-size: 1.3rem; font-weight: 700; margin: 0.8rem 0; color: #1e293b; }
-    .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 1rem 0; }
-
-    .stock-status {
-      font-size: 0.95rem; font-weight: 600; padding: 0.5rem 0;
-      color: var(--success);
+    .product-image {
+      width:100%; height:280px; object-fit:cover; transition:transform 0.6s ease;
     }
-    .stock-status.out { color: var(--danger); }
+    .product-card:hover .product-image { transform:scale(1.08); }
+
+    .product-info {
+      padding:1.5rem;
+    }
+    .product-category {
+      color:var(--primary); font-size:0.9rem; font-weight:600; text-transform:uppercase; letter-spacing:1px;
+    }
+    .product-name {
+      font-size:1.3rem; font-weight:700; margin:0.8rem 0; color:var(--dark);
+    }
+    .product-price {
+      font-size:1.8rem; font-weight:800; color:var(--primary); margin:1rem 0;
+    }
+    .stock-info {
+      font-size:0.95rem; color:var(--gray); margin:0.5rem 0;
+    }
+    .in-stock { color:#10b981; font-weight:600; }
+    .out-of-stock { color:#ef4444; font-weight:600; }
 
     .product-actions {
-      display: flex; gap: 1rem; margin-top: 1.5rem;
+      display:flex; gap:1rem; margin-top:1.5rem;
     }
-    .add-cart-btn {
-      flex: 1; background: var(--primary); color: white; border: none; padding: 1rem;
-      border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition);
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .add-cart-btn:hover { background: var(--primary-dark); }
-    .add-cart-btn:disabled { background: #94a3b8; cursor: not-allowed; }
-
     .quick-view-btn {
-      background: white; color: var(--primary); border: 2px solid var(--primary);
-      width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center;
-      cursor: pointer; transition: var(--transition);
+      background:white; color:var(--primary); border:2px solid var(--primary);
+      width:50px; height:50px; border-radius:50%; display:grid; place-items:center;
+      cursor:pointer; transition:var(--transition);
     }
-    .quick-view-btn:hover { background: var(--primary); color: white; }
-
-    .notification {
-      position: fixed; bottom: 30px; right: 30px; background: var(--success); color: white;
-      padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow); z-index: 1000;
-      display: flex; align-items: center; gap: 12px; transform: translateX(400px); opacity: 0; transition: 0.4s ease;
+    .quick-view-btn:hover {
+      background:var(--primary); color:white;
     }
-    .notification.show { transform: translateX(0); opacity: 1; }
-    .notification.error { background: var(--danger); }
+    .add-to-cart {
+      flex:1; background:var(--primary); color:white; border:none;
+      padding:1rem; border-radius:12px; font-weight:600; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .add-to-cart:hover { background:var(--primary-dark); }
+    .add-to-cart:disabled {
+      background:#94a3b8; cursor:not-allowed;
+    }
 
-    /* Admin Only Styles */
+    /* Admin Controls */
     .admin-controls {
-      background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2rem; border-radius: var(--radius);
-      text-align: center; margin: 2rem auto; max-width: 1200px; box-shadow: var(--shadow);
+      background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:2rem;
+      border-radius:var(--radius); text-align:center; margin:2rem auto; max-width:1200px;
+      box-shadow:var(--shadow);
     }
     .admin-controls button {
-      background: white; color: var(--primary); border: none; padding: 0.8rem 1.5rem;
-      border-radius: 50px; margin: 0.5rem; cursor: pointer; font-weight: bold;
+      background:white; color:var(--primary); border:none; padding:0.8rem 1.5rem;
+      border-radius:50px; margin:0.5rem; cursor:pointer; font-weight:600;
     }
 
+    .notification {
+      position:fixed; bottom:30px; right:30px; background:#10b981; color:white;
+      padding:1rem 1.5rem; border-radius:12px; box-shadow:var(--shadow);
+      display:flex; align-items:center; gap:12px; z-index:1000;
+      transform:translateY(100px); opacity:0; transition:0.4s;
+    }
+    .notification.show { transform:translateY(0); opacity:1; }
+    .notification.error { background:#ef4444; }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .products-grid { grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); }
+    }
     @media (max-width: 768px) {
-      .hero-title { font-size: 2.5rem; }
-      .products-grid { grid-template-columns: 1fr 1fr; }
-      .header-content { padding: 1rem; }
+      .nav-links {
+        position:fixed; top:70px; left:-100%; width:100%; background:white;
+        flex-direction:column; padding:2rem; box-shadow:var(--shadow); transition:0.4s; z-index:99;
+      }
+      .nav-links.active { left:0; }
+      .mobile-toggle { display:block; }
+      .hero h1 { font-size:2.5rem; }
+      .hero p { font-size:1.1rem; }
+      .admin-controls { margin:1rem; padding:1.5rem; }
     }
     @media (max-width: 480px) {
-      .products-grid { grid-template-columns: 1fr; }
-      .hero-title { font-size: 2rem; }
+      .hero h1 { font-size:2rem; }
+      .search-input { padding:0.9rem 3.5rem 0.9rem 1.2rem; }
+      .product-info { padding:1.2rem; }
+      .product-name { font-size:1.2rem; }
+      .product-price { font-size:1.6rem; }
+      .notification { bottom:20px; right:20px; padding:0.8rem 1.2rem; font-size:0.9rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="header-content">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Siliya Electricals">
-        <span>Siliya Electricals</span>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg" alt="Siliya Electricals">
+        Siliya Electricals
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#repair">Repairs</a>
+        <a href="index.html#training">Training</a>
+        <a href="login.html">Login</a>
+        <a href="cart.html" class="cart-icon">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a>
       </div>
-      <div class="cart-icon" onclick="window.location.href='cart.html'">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cartCount">0</span>
-      </div>
+      <div class="mobile-toggle" id="mobileToggle">Menu</div>
     </div>
-  </header>
+  </nav>
 
   <!-- Hero -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <h1 class="hero-title">Premium Electrical Appliances</h1>
-      <p class="hero-subtitle">Best prices on TVs, Fridges, Fans, Chargers, Solar & More in Malawi</p>
-      <div class="search-container">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search TVs, fridge, solar, fan...">
-        <button class="search-button"><i class="fas fa-search"></i></button>
-      </div>
+  <section class="hero">
+    <h1>Premium Electrical Store</h1>
+    <p>Best prices on TVs, fridges, fans, chargers, solar panels & more in Malawi</p>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search products..." />
+      <button class="search-btn">Search</button>
     </div>
   </section>
 
-  <!-- Admin Controls (Hidden for normal users) -->
-  <div id="adminControls" class="admin-controls hidden">
+  <!-- Admin Controls (Only visible to admins) -->
+  <div class="admin-controls hidden" id="adminControls">
     <h2>Admin Product Management</h2>
-    <p>Only visible to logged-in admins</p>
     <button onclick="openAddProductModal()">Add New Product</button>
-    <button onclick="loadProducts(true)">Refresh Products</button>
+    <button onclick="loadProducts()">Refresh Products</button>
   </div>
 
+  <!-- Filters -->
   <div class="container">
-    <h2 class="section-title">All Products</h2>
-
-    <!-- Filters -->
-    <div class="filter-section">
+    <div class="filters">
       <select class="filter-select" id="categoryFilter">
         <option value="">All Categories</option>
         <option value="Televisions">Televisions</option>
         <option value="Appliances">Fridges & Freezers</option>
-        <option value="Audio">Speakers & Sound Systems</option>
+        <option value="Audio">Speakers & Audio</option>
         <option value="Phones">Phones & Tablets</option>
         <option value="Solar">Solar Products</option>
-        <option value="Accessories">Chargers & Cables</option>
+        <option value="Accessories">Chargers & Accessories</option>
       </select>
     </div>
 
     <!-- Products Grid -->
     <div class="products-grid" id="productsGrid">
-      <!-- Products loaded by JavaScript -->
-      <div style="grid-column: 1/-1; text-align:center; padding:4rem; color:#999;">
+      <div style="grid-column:1/-1; text-align:center; padding:4rem; color:#999;">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
         <p>Loading products...</p>
       </div>
     </div>
   </div>
 
-  <!-- Notification Toast -->
+  <!-- Notification -->
   <div class="notification" id="notification">
-    <i class="fas fa-check-circle"></i>
-    <span id="notificationText">Product added to cart!</span>
+    <span id="notificationText">Added to cart!</span>
   </div>
 
   <!-- Quick View Modal -->
   <div class="modal" id="quickViewModal" style="display:none;"></div>
 
-  <!-- Add Product Modal (Admin Only) -->
+  <!-- Add/Edit Product Modal (Admin Only) -->
   <div class="modal" id="addProductModal" style="display:none;">
-    <div class="modal-content" style="max-width:700px; padding:2rem;">
+    <div style="background:white; padding:2rem; border-radius:16px; max-width:600px; margin:2rem auto;">
       <h2 id="modalTitle">Add New Product</h2>
       <form id="productForm">
-        <input type="hidden" id="editProductId">
+        <input type="hidden" id="editId" />
+        <input type="text" id="pName" placeholder="Product Name" required style="width:100%; padding:1rem; margin:0.5rem 0; border-radius:8px; border:1px solid #ddd;" />
+        <input type="text" id="pBrand" placeholder="Brand" style="width:100%; padding:1rem; margin:0.5rem 0; border-radius:8px; border:1px solid #ddd;" />
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-          <input type="text" id="pName" placeholder="Product Name *" required>
-          <input type="text" id="pBrand" placeholder="Brand (e.g. Samsung)">
+          <input type="number" id="pPrice" placeholder="Price (MWK)" required />
+          <input type="number" id="pStock" placeholder="Stock" required />
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
-          <input type="number" id="pPrice" placeholder="Price (MWK) *" required>
-          <input type="number" id="pStock" placeholder="Stock Quantity *" required>
-        </div>
-        <select id="pCategory" style="margin-top:1rem; padding:1rem;" required>
+        <select id="pCategory" required style="width:100%; padding:1rem; margin:1rem 0; border-radius:8px;">
           <option value="">Select Category</option>
-          <option value="Televisions">Televisions</option>
-          <option value="Appliances">Fridges & Freezers</option>
-          <option value="Audio">Speakers & Audio</option>
-          <option value="Phones">Phones & Tablets</option>
-          <option value="Solar">Solar Products</option>
-          <option value="Accessories">Chargers & Accessories</option>
+          <option>Televisions</option><option>Appliances</option><option>Audio</option>
+          <option>Phones</option><option>Solar</option><option>Accessories</option>
         </select>
-        <textarea id="pDesc" rows="4" placeholder="Description" style="margin-top:1rem; padding:1rem;" required></textarea>
-        <input type="file" id="pImage" accept="image/*" style="margin-top:1rem;">
-        <div style="margin-top:1rem; display:flex; gap:1rem;">
-          <label><input type="checkbox" id="pFeatured"> Featured Product</label>
-        </div>
-        <div style="margin-top:2rem; display:flex; gap:1rem; justify-content:flex-end;">
-          <button type="button" onclick="closeModal('addProductModal')" style="padding:0.8rem 1.5rem; background:#e2e8f0; border:none; border-radius:8px;">Cancel</button>
-          <button type="submit" style="padding:0.8rem 1.5rem; background:var(--primary); color:white; border:none; border-radius:8px;">Save Product</button>
+        <textarea id="pDesc" rows="4" placeholder="Description" required style="width:100%; padding:1rem; border-radius:8px; border:1px solid #ddd;"></textarea>
+        <input type="file" id="pImage" accept="image/*" style="margin:1rem 0;" />
+        <label><input type="checkbox" id="pFeatured" /> Featured Product</label>
+        <div style="margin-top:2rem; text-align:right;">
+          <button type="button" onclick="document.getElementById('addProductModal').style.display='none'" style="padding:0.8rem 1.5rem; background:#e2e8f0; border:none; border-radius:8px; margin-right:1rem;">Cancel</button>
+          <button type="submit" style="padding:0.8rem 2rem; background:var(--primary); color:white; border:none; border-radius:8px;">Save</button>
         </div>
       </form>
     </div>
   </div>
 
+  <script src="app.js"></script>
   <script>
     const BASE_URL = "https://siliya-electricals.onrender.com";
-    let allProducts = [];
+    let products = [];
     let isAdmin = false;
 
-    // Check if user is admin
+    // Check if admin
     async function checkAdmin() {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -259,124 +308,95 @@
       } catch(e) {}
     }
 
-    // Load all products
-    async function loadProducts(force = false) {
-      try {
-        const res = await fetch(`${BASE_URL}/api/products`);
-        const data = await res.json();
-        allProducts = Array.isArray(data) ? data : data.data || [];
-        renderProducts(allProducts);
-      } catch (err) {
-        document.getElementById('productsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:#ef4444;">Failed to load products. Please try again later.</div>`;
-      }
+    // Load products
+    async function loadProducts() {
+      fetch(`${BASE_URL}/api/products`)
+        .then(r => r.json())
+        .then(data => {
+          products = Array.isArray(data) ? data : data.data || [];
+          renderProducts(products);
+        })
+        .catch(() => {
+          document.getElementById('productsGrid').innerHTML = `<p style="text-align:center;color:#ef4444;">Failed to load products</p>`;
+        });
     }
 
     // Render products
-    function renderProducts(products) {
-      if (products.length === 0) {
-        document.getElementById('productsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">No products found</div>`;
+    function renderProducts(list) {
+      const grid = document.getElementById('productsGrid');
+      if (list.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">No products found</div>`;
         return;
       }
-
-      document.getElementById('productsGrid').innerHTML = products.map(p => `
+      grid.innerHTML = list.map(p => `
         <div class="product-card">
-          ${p.stock === 0 ? '<div class="product-badge out-of-stock-badge">Out of Stock</div>' : ''}
-          ${p.featured ? '<div class="product-badge">Featured</div>' : ''}
-          
-          <div class="product-image-container">
-            <img src="${p.image || 'assets/default-product.png'}" alt="${p.name}" class="product-image">
-          </div>
-          
+          ${p.stock === 0 ? '<div class="product-badge out-of-stock">Out of Stock</div>' : ''}
+          ${p.featured ? '<div class="product-badge featured">Featured</div>' : ''}
+          <img src="${p.image || 'assets/default-product.png'}" alt="${p.name}" class="product-image" />
           <div class="product-info">
-            <span class="product-category">${p.category}</span>
+            <div class="product-category">${p.category || 'Uncategorized'}</div>
             <h3 class="product-name">${p.name}</h3>
-            ${p.brand ? `<p style="margin:0.5rem 0; color:#666;"><strong>Brand:</strong> ${p.brand}</p>` : ''}
+            ${p.brand ? `<p style="margin:0.5rem 0;color:#666;"><strong>Brand:</strong> ${p.brand}</p>` : ''}
             <div class="product-price">MWK ${Number(p.price).toLocaleString()}</div>
-            <div class="stock-status ${p.stock > 0 ? 'class="in-stock"' : 'class="out"'}>
-              ${p.stock > 0 ? `${p.stock} in stock` : 'Out of stock'}
+            <div class="stock-info ${p.stock > 0 ? 'in-stock' : 'out-of-stock'}">
+              ${p.stock > 0 ? p.stock + ' in stock' : 'Out of stock'}
             </div>
-            
             <div class="product-actions">
-              <button class="quick-view-btn" onclick="quickView('${p._id}')">
-                <i class="fas fa-eye"></i>
-              </button>
-              <button class="add-cart-btn" onclick="addToCart('${p._id}', '${p.name}')" ${p.stock === 0 ? 'disabled' : ''}>
-                ${p.stock === 0 ? 'Sold Out' : 'Add to Cart'}
+              <button class="quick-view-btn" onclick="quickView('${p._id}')">View</button>
+              <button class="add-to-cart" onclick="addToCart('${p._id}', '${p.name}')" ${p.stock===0?'disabled':''}>
+                ${p.stock===0?'Sold Out':'Add to Cart'}
               </button>
             </div>
-
-            ${isAdmin ? `
-              <div style="margin-top:1rem; display:flex; gap:0.5rem;">
-                <button onclick="editProduct('${p._id}')" style="flex:1; padding:0.6rem; background:#e0e7ff; border:none; border-radius:8px; font-size:0.9rem;">Edit</button>
-                <button onclick="deleteProduct('${p._id}')" style="padding:0.6rem 1rem; background:#fee2e2; border:none; border-radius:8px;">Delete</button>
-              </div>
-            ` : ''}
+            ${isAdmin ? `<div style="margin-top:1rem;display:flex;gap:0.5rem;">
+              <button onclick="editProduct('${p._id}')" style="flex:1;padding:0.6rem;background:#e0e7ff;border:none;border-radius:8px;">Edit</button>
+              <button onclick="deleteProduct('${p._id}')" style="padding:0.6rem 1rem;background:#fee2e2;border:none;border-radius:8px;">Delete</button>
+            </div>` : ''}
           </div>
         </div>
       `).join('');
     }
 
     // Search & Filter
-    document.getElementById('searchInput').addEventListener('input', filterProducts);
-    document.getElementById('categoryFilter').addEventListener('change', filterProducts);
-
-    function filterProducts() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const category = document.getElementById('categoryFilter').value;
-
-      let filtered = allProducts;
-
-      if (query) {
-        filtered = filtered.filter(p => 
-          p.name.toLowerCase().includes(query) || 
-          p.description.toLowerCase().includes(query) ||
-          p.brand?.toLowerCase().includes(query)
-        );
-      }
-      if (category) {
-        filtered = filtered.filter(p => p.category === category);
-      }
-
+    document.getElementById('searchInput').addEventListener('input', () => {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      let filtered = products;
+      if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || p.description?.toLowerCase().includes(term));
+      if (cat) filtered = filtered.filter(p => p.category === cat);
       renderProducts(filtered);
-    }
+    });
+    document.getElementById('categoryFilter').addEventListener('change', () => document.getElementById('searchInput').dispatchEvent(new Event('input')));
 
-    // Add to Cart with Notification
+    // Add to Cart
     function addToCart(id, name) {
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const existing = cart.find(item => item.id === id);
-      if (existing) existing.qty += 1;
-      else cart.push({ id, name, qty: 1 });
+      const item = cart.find(x => x.id === id);
+      if (item) item.qty += 1;
+      else cart.push({id, name, qty: 1});
       localStorage.setItem('cart', JSON.stringify(cart));
-      document.getElementById('cartCount').textContent = cart.reduce((a,c) => a + c.qty, 0);
-      showNotification(`"${name}" added to cart!`);
+      document.getElementById('cartCount').textContent = cart.reduce((a,c)=>a+c.qty,0);
+      document.getElementById('notificationText').textContent = `"${name}" added to cart!`;
+      document.getElementById('notification').classList.add('show');
+      setTimeout(() => document.getElementById('notification').classList.remove('show'), 3000);
     }
 
-    function showNotification(msg, error = false) {
-      const n = document.getElementById('notification');
-      document.getElementById('notificationText').textContent = msg;
-      if (error) n.classList.add('error'); else n.classList.remove('error');
-      n.classList.add('show');
-      setTimeout(() => n.classList.remove('show'), 3000);
-    }
-
-    // Quick View Modal
+    // Quick View
     function quickView(id) {
-      const p = allProducts.find(x => x._id === id);
-      if (!p) return;
+      const p = products.find(x => x._id === id);
       document.getElementById('quickViewModal').style.display = 'block';
       document.getElementById('quickViewModal').innerHTML = `
-        <div style="background:white; border-radius:16px; max-width:900px; margin:5% auto; position:relative; padding:2rem;">
-          <button onclick="document.getElementById('quickViewModal').style.display='none'" style="position:absolute; top:15px; right:20px; background:none; border:none; font-size:1.8rem; cursor:pointer;">×</button>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem;">
-            <img src="${p.image || 'assets/default-product.png'}" style="width:100%; border-radius:16px;">
+        <div style="background:white;padding:2rem;border-radius:16px;max-width:900px;margin:5% auto;position:relative;">
+          <button onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute;top:15px;right:20px;background:none;border:none;font-size:2rem;cursor:pointer;">x</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+            <img src="${p.image}" style="width:100%;border-radius:12px;">
             <div>
               <h2>${p.name}</h2>
               <p><strong>Category:</strong> ${p.category}</p>
-              <p style="margin:1rem 0; color:#666;">${p.description}</p>
-              <h2 style="color:var(--primary);">MWK ${Number(p.price).toLocaleString()}</h2>
-              <p><strong>Stock:</strong> <span style="color:${p.stock>0?'green':'red'}">${p.stock > 0 ? p.stock + ' available' : 'Out of stock'}</span></p>
-              <button onclick="addToCart('${p._id}', '${p.name}'); document.getElementById('quickViewModal').style.display='none';" 
-                style="margin-top:1.5rem; padding:1rem 2rem; background:var(--primary); color:white; border:none; border-radius:12px; font-size:1.1rem;" ${p.stock===0?'disabled':''}>
+              <p>${p.description}</p>
+              <h2 style="color:var(--primary);margin:1rem 0;">MWK ${Number(p.price).toLocaleString()}</p>
+              <p><strong>Stock:</strong> <span style="color:${p.stock>0?'green':'red'}">${p.stock>0?p.stock+' available':'Out of stock'}</span></p>
+              <button onclick="addToCart('${p._id}','${p.name}');this.parentElement.parentElement.style.display='none'" 
+                style="width:100%;padding:1rem;background:var(--primary);color:white;border:none;border-radius:12px;margin-top:1rem;">
                 Add to Cart
               </button>
             </div>
@@ -385,91 +405,16 @@
       `;
     }
 
-    // Admin: Open Add/Edit Modal
-    function openAddProductModal() {
-      document.getElementById('modalTitle').textContent = 'Add New Product';
-      document.getElementById('productForm').reset();
-      document.getElementById('editProductId').value = '';
-      document.getElementById('addProductModal').style.display = 'block';
-    }
-
-    // Close Modal
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    // Admin: Edit Product
-    function editProduct(id) {
-      const p = allProducts.find(x => x._id === id);
-      document.getElementById('modalTitle').textContent = 'Edit Product';
-      document.getElementById('editProductId').value = p._id;
-      document.getElementById('pName').value = p.name;
-      document.getElementById('pBrand').value = p.brand || '';
-      document.getElementById('pPrice').value = p.price;
-      document.getElementById('pStock').value = p.stock;
-      document.getElementById('pCategory').value = p.category;
-      document.getElementById('pDesc').value = p.description;
-      document.getElementById('pFeatured').checked = p.featured;
-      document.getElementById('addProductModal').style.display = 'block';
-    }
-
-    // Admin: Delete Product
-    async function deleteProduct(id) {
-      if (!confirm('Delete this product permanently?')) return;
-      try {
-        const token = localStorage.getItem('token');
-        await fetch(`${BASE_URL}/api/products/${id}`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        showNotification('Product deleted', false);
-        loadProducts();
-      } catch(e) { showNotification('Delete failed', true); }
-    }
-
-    // Admin: Save Product (Add or Update)
-    document.getElementById('productForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const id = document.getElementById('editProductId').value;
-      const formData = new FormData();
-      formData.append('name', document.getElementById('pName').value;
-      formData.append('price', document.getElementById('pPrice').value;
-      formData.append('stock', document.getElementById('pStock').value;
-      formData.append('category', document.getElementById('pCategory').value;
-      formData.append('description', document.getElementById('pDesc').value;
-      formData.append('brand', document.getElementById('pBrand').value;
-      formData.append('featured', document.getElementById('pFeatured').checked);
-
-      const file = document.getElementById('pImage').files[0];
-      if (file) formData.append('image', file);
-
-      try {
-        const token = localStorage.getItem('token');
-        const url = id ? `${BASE_URL}/api/products/${id}` : `${BASE_URL}/api/products`;
-        const method = id ? 'PATCH' : 'POST';
-
-        await fetch(url, {
-          method,
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData
-        });
-
-        showNotification(id ? 'Product updated!' : 'Product added!');
-        closeModal('addProductModal');
-        loadProducts();
-      } catch(e) {
-        showNotification('Save failed. Check console.', true);
-      }
+    // Mobile menu
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
     });
 
     // Init
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAdmin();
-      loadProducts();
-      // Load cart count
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      document.getElementById('cartCount').textContent = cart.reduce((a,c) => a + c.qty, 0);
-    });
+    checkAdmin();
+    loadProducts();
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    document.getElementById('cartCount').textContent = cart.reduce((a,c)=>a+c.qty,0);
   </script>
 </body>
 </html>
