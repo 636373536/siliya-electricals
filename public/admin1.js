@@ -1,9 +1,7 @@
 // admin1.js – COMPLETE ES MODULE WITH ALL FUNCTIONS
-// ✅ FIX: Auto-detect based on environment
-const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+const BASE_URL = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000'
-  : window.location.origin;
-
+  : 'https://siliya-electricals.onrender.com';
 const els = {
   toast: document.getElementById('toast'),
   statsGrid: document.getElementById('statsGrid'),

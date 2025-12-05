@@ -1,4 +1,4 @@
-// backend/server.js - COMPLETE SERVER CONFIGURATION
+// backend/server.js – RENDER-OPTIMIZED VERSION (Dec 2025)
 
 const express = require('express');
 const path = require('path');
@@ -8,184 +8,130 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 
-// Load environment variables FIRST
+// Load env vars first
 dotenv.config();
 
-// Create Express app
 const app = express();
 
-// Connect to MongoDB
+// ===========================
+// DATABASE
+// ===========================
 connectDB();
 
 // ===========================
 // MIDDLEWARE
 // ===========================
 
-// CORS Configuration
+// CORS – works on Render + localhost
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : 'http://localhost:3000',
+  origin: [
+    'https://siliya-electricals.onrender.com', // your Render URL
+    'http://localhost:3000',
+    'http://localhost:5000',
+  ],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
-// Body parsers
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from public directory
+// Serve static assets
 app.use(express.static(path.join(__dirname, '../public')));
-
-// Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Development logging
-if (process.env.NODE_ENV === 'development') {
+// Logging
+if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
-// Request logger for debugging
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
+// ===========================
+// ROUTES
+// ===========================
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/repairs', require('./routes/repairRoutes'));
+app.use('/api/training', require('./routes/trainingRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
+app.use('/api/messages', require('./routes/messageRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
+
+// ===========================
+// HEALTH CHECK (THIS FIXES "Disconnected")
+// ===========================
+app.get('/api/auth/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Backend is alive and healthy!',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV,
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
 });
 
 // ===========================
-// ROUTE FILES
-// ===========================
-const authRoutes = require('./routes/authRoutes');
-const repairRoutes = require('./routes/repairRoutes');
-const trainingRoutes = require('./routes/trainingRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-
-// ===========================
-// MOUNT ROUTERS (Order matters!)
-// ===========================
-app.use('/api/auth', authRoutes);
-app.use('/api/repairs', repairRoutes);
-app.use('/api/training', trainingRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/messages', messageRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-
-// ===========================
-// 404 HANDLER FOR API ROUTES
+// 404 FOR API
 // ===========================
 app.use('/api/*', (req, res) => {
-  console.error(`❌ 404 - API route not found: ${req.method} ${req.originalUrl}`);
   res.status(404).json({
-    status: 'error',
-    message: `Route not found: ${req.method} ${req.originalUrl}`,
-    availableRoutes: {
-      auth: [
-        'POST /api/auth/signup',
-        'POST /api/auth/login',
-        'GET /api/auth/profile',
-        'GET /api/auth/users (admin)',
-        'DELETE /api/auth/users/:id (admin)'
-      ],
-      repairs: [
-        'POST /api/repairs',
-        'GET /api/repairs/my-repairs',
-        'GET /api/repairs (admin)',
-        'PATCH /api/repairs/:id/status (admin)',
-        'GET /api/repairs/:id/status'
-      ],
-      training: [
-        'GET /api/training/courses',
-        'POST /api/training/enroll',
-        'GET /api/training/my-enrollments',
-        'GET /api/training/enrollments (admin)',
-        'PATCH /api/training/enrollments/:id/status (admin)'
-      ]
-    }
+    error: 'API route not found',
+    path: req.originalUrl,
   });
 });
 
 // ===========================
-// SPA FALLBACK (Must be AFTER all API routes!)
+// SPA FALLBACK – MUST BE LAST (before error handler)
 // ===========================
 app.get('*', (req, res) => {
-  // Don't serve index.html for API routes
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API route not found' });
   }
-  
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // ===========================
-// ERROR HANDLER (Must be last!)
+// ERROR HANDLER
 // ===========================
 app.use((err, req, res, next) => {
-  console.error('❌ Error:', err.stack);
-  
-  const statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
-  
-  res.status(statusCode).json({
-    status: 'error',
+  console.error('Server Error:', err.stack);
+  res.status(err.status || 500).json({
     message: err.message || 'Something went wrong!',
-    ...(process.env.NODE_ENV === 'development' && { 
-      stack: err.stack,
-      error: err 
-    })
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 });
 
 // ===========================
-// START SERVER
+// START SERVER – RENDER COMPATIBLE
 // ===========================
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log('='.repeat(50));
-  console.log(`✅ Server running in ${process.env.NODE_ENV} mode`);
-  console.log(`🚀 Port: ${PORT}`);
-  console.log(`📡 API: http://localhost:${PORT}/api`);
-  console.log(`🌐 Frontend: http://localhost:${PORT}`);
-  console.log('='.repeat(50));
+const PORT = process.env.PORT || 10000;
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log('='.repeat(60));
+  console.log('SERVER IS RUNNING');
+  console.log(`Mode        : ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Port        : ${PORT}`);
+  console.log(`Health URL  : https://your-service.onrender.com/api/auth/health`);
+  console.log(`Frontend    : https://your-service.onrender.com`);
+  console.log('='.repeat(60));
 });
 
-// ===========================
-// GRACEFUL ERROR HANDLING
-// ===========================
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('❌ UNHANDLED REJECTION! Shutting down...');
-  console.error(err.name, err.message);
-  server.close(() => {
-    process.exit(1);
-  });
-});
-
-// Handle SIGTERM
+// Graceful shutdown (Render loves this)
 process.on('SIGTERM', () => {
-  console.log('👋 SIGTERM received. Shutting down gracefully...');
+  console.log('SIGTERM received – shutting down gracefully');
   server.close(() => {
-    console.log('✅ Process terminated');
     mongoose.connection.close(false, () => {
-      console.log('✅ MongoDB connection closed');
+      console.log('MongoDB disconnected');
       process.exit(0);
     });
   });
 });
 
-// Handle SIGINT (Ctrl+C)
 process.on('SIGINT', () => {
-  console.log('\n👋 SIGINT received. Shutting down gracefully...');
-  server.close(() => {
-    console.log('✅ Process terminated');
-    mongoose.connection.close(false, () => {
-      console.log('✅ MongoDB connection closed');
-      process.exit(0);
-    });
-  });
+  console.log('\nSIGINT received – shutting down');
+  server.close(() => process.exit(0));
 });
-
-module.exports = app;

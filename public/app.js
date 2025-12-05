@@ -1,9 +1,8 @@
 // app.js - COMPLETE FILE WITH ALL FUNCTIONS
-
-const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+const BASE_URL = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000'
-  : window.location.origin; // ✅ Auto-detect production URL
-  
+  : 'https://siliya-electricals.onrender.com';
+
 let currentUser = null;
 let authToken = null;
 let socket = null;
