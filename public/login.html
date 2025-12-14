@@ -532,8 +532,7 @@
 </head>
 <body>
 
-  <!-- Connection Status -->
-  <div class="connection-status disconnected" id="connectionStatus">Backend: Checking...</div>
+
 
   <!-- Main Container -->
   <div class="container" id="container">
@@ -622,15 +621,7 @@
     <div class="spinner"></div>
   </div>
 
-  <!-- Debug Panel -->
-  <button class="debug-toggle" id="debugToggle"><i class="fas fa-bug"></i></button>
-  <div class="debug-panel" id="debugPanel">
-    <h3>Debug Log</h3>
-    <div id="debugInfo">Ready.</div>
-    <button onclick="clearStorage()">Clear Storage</button>
-    <button onclick="checkBackendConnection()">Check Backend</button>
-  </div>
-
+ 
   <script>
     // Show mobile toggle buttons on mobile
     if (window.innerWidth <= 768) {

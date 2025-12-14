@@ -31,48 +31,115 @@
     .nav-container {
       max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
     }
-    .logo { font-size:1.8rem; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:12px; }
+    .logo { 
+      font-size:1.8rem; 
+      font-weight:700; 
+      color:var(--primary); 
+      display:flex; 
+      align-items:center; 
+      gap:12px;
+      text-decoration: none;
+    }
     .logo img { height:48px; border-radius:8px; }
-    .nav-links { display:flex; gap:2rem; align-items:center; flex-wrap:wrap; }
-    .nav-links a { color:var(--dark); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .nav-links { 
+      display:flex; 
+      gap:2rem; 
+      align-items:center; 
+      flex-wrap:wrap;
+    }
+    .nav-links a { 
+      color:var(--dark); 
+      text-decoration:none; 
+      font-weight:500; 
+      transition:var(--transition); 
+    }
     .nav-links a:hover { color:var(--primary); }
     .cart-icon {
-      position:relative; font-size:1.5rem; color:var(--primary); cursor:pointer;
+      position:relative; 
+      font-size:1.5rem; 
+      color:var(--primary); 
+      cursor:pointer;
+      text-decoration: none;
     }
     .cart-count {
-      position:absolute; top:-8px; right:-10px; background:var(--secondary); color:white;
-      font-size:0.75rem; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-weight:bold;
+      position:absolute; 
+      top:-8px; 
+      right:-10px; 
+      background:var(--secondary); 
+      color:white;
+      font-size:0.75rem; 
+      width:20px; 
+      height:20px; 
+      border-radius:50%; 
+      display:grid; 
+      place-items:center; 
+      font-weight:bold;
     }
-    .mobile-toggle { display:none; font-size:1.8rem; cursor:pointer; }
+    .mobile-toggle { 
+      display:none; 
+      font-size:1.8rem; 
+      cursor:pointer; 
+      color: var(--dark);
+    }
 
     /* Hero */
     .hero {
-      background: linear-gradient(135deg, #141e30, #243b55); color:white; text-align:center;
-      padding:5rem 1rem; border-radius:0 0 0 var(--radius) var(--radius);
+      background: linear-gradient(135deg, #141e30, #243b55); 
+      color:white; 
+      text-align:center;
+      padding:5rem 1rem; 
     }
     .hero h1 { font-size:3rem; margin-bottom:1rem; }
     .hero p { font-size:1.3rem; max-width:700px; margin:0 auto 2rem; opacity:0.9; }
     .search-container {
-      max-width:600px; margin:0 auto; position:relative;
+      max-width:600px; 
+      margin:0 auto; 
+      position:relative;
     }
     .search-input {
-      width:100%; padding:1rem 4rem 1rem 1.5rem; border-radius:50px; border:none;
-      font-size:1.1rem; box-shadow:var(--shadow);
+      width:100%; 
+      padding:1rem 4rem 1rem 1.5rem; 
+      border-radius:50px; 
+      border:none;
+      font-size:1.1rem; 
+      box-shadow:var(--shadow);
     }
     .search-btn {
-      position:absolute; right:8px; top:8px; background:var(--secondary); color:white;
-      border:none; width:48px; height:48px; border-radius:50%; cursor:pointer;
+      position:absolute; 
+      right:8px; 
+      top:8px; 
+      background:var(--secondary); 
+      color:white;
+      border:none; 
+      width:48px; 
+      height:48px; 
+      border-radius:50%; 
+      cursor:pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .container { max-width:1400px; margin:2rem auto; padding:0 1rem; }
 
     /* Filters */
     .filters {
-      display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:2rem 0;
-      padding:1.5rem; background:white; border-radius:var(--radius); box-shadow:var(--shadow);
+      display:flex; 
+      flex-wrap:wrap; 
+      gap:1rem; 
+      justify-content:center; 
+      margin:2rem 0;
+      padding:1.5rem; 
+      background:white; 
+      border-radius:var(--radius); 
+      box-shadow:var(--shadow);
     }
     .filter-select {
-      padding:0.8rem 1.2rem; border:1px solid var(--border); border-radius:8px; font-size:1rem;
+      padding:0.8rem 1.2rem; 
+      border:1px solid var(--border); 
+      border-radius:8px; 
+      font-size:1rem;
+      min-width: 200px;
     }
 
     /* Products Grid */
@@ -83,21 +150,37 @@
       margin:2rem 0;
     }
     .product-card {
-      background:white; border-radius:var(--radius); overflow:hidden;
-      box-shadow:var(--shadow); transition:var(--transition); position:relative;
+      background:white; 
+      border-radius:var(--radius); 
+      overflow:hidden;
+      box-shadow:var(--shadow); 
+      transition:var(--transition); 
+      position:relative;
     }
     .product-card:hover {
-      transform:translateY(-12px); box-shadow:0 20px 40px rgba(0,0,0,0.15);
+      transform:translateY(-12px); 
+      box-shadow:0 20px 40px rgba(0,0,0,0.15);
     }
     .product-badge {
-      position:absolute; top:12px; left:12px; background:var(--secondary); color:white;
-      padding:0.4rem 0.9rem; border-radius:50px; font-size:0.8rem; font-weight:600; z-index:5;
+      position:absolute; 
+      top:12px; 
+      left:12px; 
+      background:var(--secondary); 
+      color:white;
+      padding:0.4rem 0.9rem; 
+      border-radius:50px; 
+      font-size:0.8rem; 
+      font-weight:600; 
+      z-index:5;
     }
     .out-of-stock { background:#ef4444 !important; }
     .featured { background:#10b981 !important; }
 
     .product-image {
-      width:100%; height:280px; object-fit:cover; transition:transform 0.6s ease;
+      width:100%; 
+      height:280px; 
+      object-fit:cover; 
+      transition:transform 0.6s ease;
     }
     .product-card:hover .product-image { transform:scale(1.08); }
 
@@ -105,83 +188,282 @@
       padding:1.5rem;
     }
     .product-category {
-      color:var(--primary); font-size:0.9rem; font-weight:600; text-transform:uppercase; letter-spacing:1px;
+      color:var(--primary); 
+      font-size:0.9rem; 
+      font-weight:600; 
+      text-transform:uppercase; 
+      letter-spacing:1px;
     }
     .product-name {
-      font-size:1.3rem; font-weight:700; margin:0.8rem 0; color:var(--dark);
+      font-size:1.3rem; 
+      font-weight:700; 
+      margin:0.8rem 0; 
+      color:var(--dark);
     }
     .product-price {
-      font-size:1.8rem; font-weight:800; color:var(--primary); margin:1rem 0;
+      font-size:1.8rem; 
+      font-weight:800; 
+      color:var(--primary); 
+      margin:1rem 0;
     }
     .stock-info {
-      font-size:0.95rem; color:var(--gray); margin:0.5rem 0;
+      font-size:0.95rem; 
+      color:var(--gray); 
+      margin:0.5rem 0;
     }
     .in-stock { color:#10b981; font-weight:600; }
     .out-of-stock { color:#ef4444; font-weight:600; }
 
     .product-actions {
-      display:flex; gap:1rem; margin-top:1.5rem;
+      display:flex; 
+      gap:1rem; 
+      margin-top:1.5rem;
     }
     .quick-view-btn {
-      background:white; color:var(--primary); border:2px solid var(--primary);
-      width:50px; height:50px; border-radius:50%; display:grid; place-items:center;
-      cursor:pointer; transition:var(--transition);
+      background:white; 
+      color:var(--primary); 
+      border:2px solid var(--primary);
+      width:50px; 
+      height:50px; 
+      border-radius:50%; 
+      display:grid; 
+      place-items:center;
+      cursor:pointer; 
+      transition:var(--transition);
     }
     .quick-view-btn:hover {
-      background:var(--primary); color:white;
+      background:var(--primary); 
+      color:white;
     }
     .add-to-cart {
-      flex:1; background:var(--primary); color:white; border:none;
-      padding:1rem; border-radius:12px; font-weight:600; cursor:pointer;
-      display:flex; align-items:center; justify-content:center; gap:8px;
+      flex:1; 
+      background:var(--primary); 
+      color:white; 
+      border:none;
+      padding:1rem; 
+      border-radius:12px; 
+      font-weight:600; 
+      cursor:pointer;
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      gap:8px;
     }
     .add-to-cart:hover { background:var(--primary-dark); }
     .add-to-cart:disabled {
-      background:#94a3b8; cursor:not-allowed;
+      background:#94a3b8; 
+      cursor:not-allowed;
     }
 
     /* Admin Controls */
     .admin-controls {
-      background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:2rem;
-      border-radius:var(--radius); text-align:center; margin:2rem auto; max-width:1200px;
+      background:linear-gradient(135deg,#667eea,#764ba2); 
+      color:white; 
+      padding:2rem;
+      border-radius:var(--radius); 
+      text-align:center; 
+      margin:2rem auto; 
+      max-width:1200px;
       box-shadow:var(--shadow);
     }
     .admin-controls button {
-      background:white; color:var(--primary); border:none; padding:0.8rem 1.5rem;
-      border-radius:50px; margin:0.5rem; cursor:pointer; font-weight:600;
+      background:white; 
+      color:var(--primary); 
+      border:none; 
+      padding:0.8rem 1.5rem;
+      border-radius:50px; 
+      margin:0.5rem; 
+      cursor:pointer; 
+      font-weight:600;
     }
 
     .notification {
-      position:fixed; bottom:30px; right:30px; background:#10b981; color:white;
-      padding:1rem 1.5rem; border-radius:12px; box-shadow:var(--shadow);
-      display:flex; align-items:center; gap:12px; z-index:1000;
-      transform:translateY(100px); opacity:0; transition:0.4s;
+      position:fixed; 
+      bottom:30px; 
+      right:30px; 
+      background:#10b981; 
+      color:white;
+      padding:1rem 1.5rem; 
+      border-radius:12px; 
+      box-shadow:var(--shadow);
+      display:flex; 
+      align-items:center; 
+      gap:12px; 
+      z-index:1000;
+      transform:translateY(100px); 
+      opacity:0; 
+      transition:0.4s;
     }
     .notification.show { transform:translateY(0); opacity:1; }
     .notification.error { background:#ef4444; }
 
+    .hidden { display: none !important; }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
     /* Responsive */
     @media (max-width: 992px) {
-      .products-grid { grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); }
+      .products-grid { 
+        grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); 
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.2rem;
+      }
     }
+    
     @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .nav-container {
+        gap: 0.5rem;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .logo img {
+        height: 40px;
+      }
+      
       .nav-links {
-        position:fixed; top:70px; left:-100%; width:100%; background:white;
-        flex-direction:column; padding:2rem; box-shadow:var(--shadow); transition:0.4s; z-index:99;
+        position:fixed; 
+        top:70px; 
+        left:-100%; 
+        width:100%; 
+        background:white;
+        flex-direction:column; 
+        padding:2rem; 
+        box-shadow:var(--shadow); 
+        transition:0.4s; 
+        z-index:99;
+        align-items: flex-start;
       }
       .nav-links.active { left:0; }
+      
       .mobile-toggle { display:block; }
+      
+      .hero {
+        padding: 3rem 1rem;
+      }
+      
       .hero h1 { font-size:2.5rem; }
       .hero p { font-size:1.1rem; }
-      .admin-controls { margin:1rem; padding:1.5rem; }
+      
+      .search-container {
+        max-width: 100%;
+      }
+      
+      .search-input {
+        font-size: 1rem;
+        padding: 0.9rem 3.5rem 0.9rem 1.2rem;
+      }
+      
+      .search-btn {
+        width: 42px;
+        height: 42px;
+        right: 6px;
+        top: 6px;
+      }
+      
+      .filters {
+        padding: 1rem;
+      }
+      
+      .filter-select {
+        width: 100%;
+        min-width: auto;
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .admin-controls { 
+        margin:1rem; 
+        padding:1.5rem; 
+      }
+      
+      .notification {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+      }
     }
+    
     @media (max-width: 480px) {
       .hero h1 { font-size:2rem; }
-      .search-input { padding:0.9rem 3.5rem 0.9rem 1.2rem; }
+      .hero p { font-size: 1rem; }
+      
+      .search-input { 
+        padding:0.8rem 3rem 0.8rem 1rem;
+        font-size: 0.95rem;
+      }
+      
+      .search-btn {
+        width: 38px;
+        height: 38px;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
       .product-info { padding:1.2rem; }
       .product-name { font-size:1.2rem; }
       .product-price { font-size:1.6rem; }
-      .notification { bottom:20px; right:20px; padding:0.8rem 1.2rem; font-size:0.9rem; }
+      
+      .product-actions {
+        flex-direction: column;
+      }
+      
+      .quick-view-btn {
+        width: 100%;
+        height: 45px;
+        border-radius: 12px;
+      }
+      
+      .notification { 
+        bottom:15px; 
+        right:15px; 
+        left: 15px;
+        padding:0.8rem 1rem; 
+        font-size:0.9rem; 
+      }
+      
+      .admin-controls button {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+      }
     }
   </style>
 </head>
@@ -201,10 +483,13 @@
         <a href="index.html#training">Training</a>
         <a href="login.html">Login</a>
         <a href="cart.html" class="cart-icon">
-          Cart <span class="cart-count" id="cartCount">0</span>
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
         </a>
       </div>
-      <div class="mobile-toggle" id="mobileToggle">Menu</div>
+      <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+      </div>
     </div>
   </nav>
 
@@ -214,7 +499,7 @@
     <p>Best prices on TVs, fridges, fans, chargers, solar panels & more in Malawi</p>
     <div class="search-container">
       <input type="text" class="search-input" id="searchInput" placeholder="Search products..." />
-      <button class="search-btn">Search</button>
+      <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
   </section>
 
@@ -250,25 +535,26 @@
 
   <!-- Notification -->
   <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
     <span id="notificationText">Added to cart!</span>
   </div>
 
   <!-- Quick View Modal -->
-  <div class="modal" id="quickViewModal" style="display:none;"></div>
+  <div class="modal" id="quickViewModal"></div>
 
   <!-- Add/Edit Product Modal (Admin Only) -->
-  <div class="modal" id="addProductModal" style="display:none;">
-    <div style="background:white; padding:2rem; border-radius:16px; max-width:600px; margin:2rem auto;">
+  <div class="modal" id="addProductModal">
+    <div style="background:white; padding:2rem; border-radius:16px; max-width:600px; width: 100%; margin:2rem auto;">
       <h2 id="modalTitle">Add New Product</h2>
       <form id="productForm">
         <input type="hidden" id="editId" />
         <input type="text" id="pName" placeholder="Product Name" required style="width:100%; padding:1rem; margin:0.5rem 0; border-radius:8px; border:1px solid #ddd;" />
         <input type="text" id="pBrand" placeholder="Brand" style="width:100%; padding:1rem; margin:0.5rem 0; border-radius:8px; border:1px solid #ddd;" />
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-          <input type="number" id="pPrice" placeholder="Price (MWK)" required />
-          <input type="number" id="pStock" placeholder="Stock" required />
+          <input type="number" id="pPrice" placeholder="Price (MWK)" required style="padding:1rem; border-radius:8px; border:1px solid #ddd;" />
+          <input type="number" id="pStock" placeholder="Stock" required style="padding:1rem; border-radius:8px; border:1px solid #ddd;" />
         </div>
-        <select id="pCategory" required style="width:100%; padding:1rem; margin:1rem 0; border-radius:8px;">
+        <select id="pCategory" required style="width:100%; padding:1rem; margin:1rem 0; border-radius:8px; border:1px solid #ddd;">
           <option value="">Select Category</option>
           <option>Televisions</option><option>Appliances</option><option>Audio</option>
           <option>Phones</option><option>Solar</option><option>Accessories</option>
@@ -277,7 +563,7 @@
         <input type="file" id="pImage" accept="image/*" style="margin:1rem 0;" />
         <label><input type="checkbox" id="pFeatured" /> Featured Product</label>
         <div style="margin-top:2rem; text-align:right;">
-          <button type="button" onclick="document.getElementById('addProductModal').style.display='none'" style="padding:0.8rem 1.5rem; background:#e2e8f0; border:none; border-radius:8px; margin-right:1rem;">Cancel</button>
+          <button type="button" onclick="document.getElementById('addProductModal').classList.remove('active')" style="padding:0.8rem 1.5rem; background:#e2e8f0; border:none; border-radius:8px; margin-right:1rem;">Cancel</button>
           <button type="submit" style="padding:0.8rem 2rem; background:var(--primary); color:white; border:none; border-radius:8px;">Save</button>
         </div>
       </form>
@@ -289,6 +575,11 @@
     const BASE_URL = "https://siliya-electricals.onrender.com";
     let products = [];
     let isAdmin = false;
+
+    // Mobile menu toggle
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
 
     // Check if admin
     async function checkAdmin() {
@@ -317,7 +608,7 @@
           renderProducts(products);
         })
         .catch(() => {
-          document.getElementById('productsGrid').innerHTML = `<p style="text-align:center;color:#ef4444;">Failed to load products</p>`;
+          document.getElementById('productsGrid').innerHTML = `<p style="text-align:center;color:#ef4444;grid-column:1/-1;">Failed to load products</p>`;
         });
     }
 
@@ -342,9 +633,9 @@
               ${p.stock > 0 ? p.stock + ' in stock' : 'Out of stock'}
             </div>
             <div class="product-actions">
-              <button class="quick-view-btn" onclick="quickView('${p._id}')">View</button>
+              <button class="quick-view-btn" onclick="quickView('${p._id}')"><i class="fas fa-eye"></i></button>
               <button class="add-to-cart" onclick="addToCart('${p._id}', '${p.name}')" ${p.stock===0?'disabled':''}>
-                ${p.stock===0?'Sold Out':'Add to Cart'}
+                <i class="fas fa-cart-plus"></i> ${p.stock===0?'Sold Out':'Add to Cart'}
               </button>
             </div>
             ${isAdmin ? `<div style="margin-top:1rem;display:flex;gap:0.5rem;">
@@ -383,19 +674,20 @@
     // Quick View
     function quickView(id) {
       const p = products.find(x => x._id === id);
-      document.getElementById('quickViewModal').style.display = 'block';
-      document.getElementById('quickViewModal').innerHTML = `
-        <div style="background:white;padding:2rem;border-radius:16px;max-width:900px;margin:5% auto;position:relative;">
-          <button onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute;top:15px;right:20px;background:none;border:none;font-size:2rem;cursor:pointer;">x</button>
+      const modal = document.getElementById('quickViewModal');
+      modal.classList.add('active');
+      modal.innerHTML = `
+        <div style="background:white;padding:2rem;border-radius:16px;max-width:900px;width:95%;margin:2rem auto;position:relative;">
+          <button onclick="this.closest('.modal').classList.remove('active')" style="position:absolute;top:15px;right:20px;background:none;border:none;font-size:2rem;cursor:pointer;">&times;</button>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
             <img src="${p.image}" style="width:100%;border-radius:12px;">
             <div>
               <h2>${p.name}</h2>
               <p><strong>Category:</strong> ${p.category}</p>
               <p>${p.description}</p>
-              <h2 style="color:var(--primary);margin:1rem 0;">MWK ${Number(p.price).toLocaleString()}</p>
+              <h2 style="color:var(--primary);margin:1rem 0;">MWK ${Number(p.price).toLocaleString()}</h2>
               <p><strong>Stock:</strong> <span style="color:${p.stock>0?'green':'red'}">${p.stock>0?p.stock+' available':'Out of stock'}</span></p>
-              <button onclick="addToCart('${p._id}','${p.name}');this.parentElement.parentElement.style.display='none'" 
+              <button onclick="addToCart('${p._id}','${p.name}');this.closest('.modal').classList.remove('active')" 
                 style="width:100%;padding:1rem;background:var(--primary);color:white;border:none;border-radius:12px;margin-top:1rem;">
                 Add to Cart
               </button>
@@ -404,11 +696,6 @@
         </div>
       `;
     }
-
-    // Mobile menu
-    document.getElementById('mobileToggle').addEventListener('click', () => {
-      document.getElementById('navLinks').classList.toggle('active');
-    });
 
     // Init
     checkAdmin();
