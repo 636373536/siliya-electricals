@@ -29,17 +29,58 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: var(--dark); line-height:1.6; }
     .admin-layout { display:flex; min-height:100vh; }
-    .sidebar { width:280px; background:#152a44; color:white; padding:2rem 1.5rem; display:flex; flex-direction:column; box-shadow:var(--shadow-md); position:sticky; top:0; height:100vh; overflow-y:auto; }
+    
+    /* Sidebar */
+    .sidebar { 
+      width:280px; 
+      background:#152a44; 
+      color:white; 
+      padding:2rem 1.5rem; 
+      display:flex; 
+      flex-direction:column; 
+      box-shadow:var(--shadow-md); 
+      position:sticky; 
+      top:0; 
+      height:100vh; 
+      overflow-y:auto;
+      transition: transform 0.3s ease;
+    }
+    
     .logo h2 { font-size:1.5rem; font-weight:700; }
     .logo p { opacity:0.8; font-size:0.9rem; }
     .nav-list { list-style:none; margin-top:2rem; }
-    .nav-item { padding:0.75rem 1rem; margin:0.35rem 0; border-radius:var(--radius); cursor:pointer; display:flex; align-items:center; gap:0.75rem; transition:var(--transition); font-weight:500; }
-    .nav-item.active { background:var(--primary); color:white; transform:translateX(10px); box-shadow:0 4px 12px rgba(45,160,168,0.3); }
+    .nav-item { 
+      padding:0.75rem 1rem; 
+      margin:0.35rem 0; 
+      border-radius:var(--radius); 
+      cursor:pointer; 
+      display:flex; 
+      align-items:center; 
+      gap:0.75rem; 
+      transition:var(--transition); 
+      font-weight:500; 
+    }
+    .nav-item.active { 
+      background:var(--primary); 
+      color:white; 
+      transform:translateX(10px); 
+      box-shadow:0 4px 12px rgba(45,160,168,0.3); 
+    }
     .nav-item:hover { background:rgba(255,255,255,0.1); transform:translateX(6px); }
     .sidebar-footer { margin-top:auto; padding-top:1.5rem; }
+    
+    /* Main Content */
     .main-content { flex:1; padding:2rem; overflow-y:auto; }
-    .header { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; flex-wrap:wrap; gap:1rem; }
+    .header { 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      margin-bottom:2rem; 
+      flex-wrap:wrap; 
+      gap:1rem; 
+    }
     .date-display { font-weight:600; color:var(--primary); }
+    
     .search-bar {
       display: flex;
       background: white;
@@ -77,6 +118,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      border-radius: 0 50px 50px 0;
     }
 
     .search-btn:hover {
@@ -86,17 +128,19 @@
     .search-btn:active {
       transform: scale(0.98);
     }
-
-    /* Ensure it doesn't conflict with modals */
-    .search-btn, .search-bar {
-      z-index: auto;
-      position: relative;
-    }
+    
     .user-profile { display:flex; align-items:center; gap:0.75rem; font-weight:500; }
     .user-profile img { border-radius:50%; object-fit:cover; width:40px; height:40px; }
 
     .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:1.5rem; margin-bottom:2rem; }
-    .stat-card { background:white; padding:1.5rem; border-radius:var(--radius); box-shadow:var(--shadow-sm); text-align:center; transition:var(--transition); }
+    .stat-card { 
+      background:white; 
+      padding:1.5rem; 
+      border-radius:var(--radius); 
+      box-shadow:var(--shadow-sm); 
+      text-align:center; 
+      transition:var(--transition); 
+    }
     .stat-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:var(--shadow-md); }
     .stat-value { font-size:2rem; font-weight:700; color:var(--primary); margin:0.5rem 0; }
     .stat-label { font-size:0.85rem; color:var(--gray); }
@@ -117,44 +161,170 @@
     .status-completed { background:var(--success); color:white; }
     .status-cancelled, .status-rejected { background:var(--danger); color:white; }
 
-    table { width:100%; border-collapse:collapse; background:white; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); }
+    table { 
+      width:100%; 
+      border-collapse:collapse; 
+      background:white; 
+      border-radius:var(--radius); 
+      overflow:hidden; 
+      box-shadow:var(--shadow-sm);
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
     th, td { padding:1rem; text-align:left; border-bottom:1px solid var(--border); }
-    th { background:#f1f3f5; font-weight:600; }
+    th { background:#f1f3f5; font-weight:600; position: sticky; left: 0; }
     tr:hover { background:rgba(45,160,168,0.05); }
 
     .btn { padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; font-weight:500; transition:var(--transition); }
     .btn-primary { background:var(--primary); color:white; }
     .btn-primary:hover { background:var(--primary-dark); }
+    .btn-danger { background:var(--danger); color:white; }
+    .btn-danger:hover { background:#d32f2f; }
+    .w-100 { width:100%; }
 
-    .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000; }
+    .modal { 
+      display:none; 
+      position:fixed; 
+      inset:0; 
+      background:rgba(0,0,0,0.5); 
+      align-items:center; 
+      justify-content:center; 
+      z-index:1000;
+      padding: 1rem;
+    }
     .modal.active { display:flex; }
-    .modal-content { background:white; padding:2rem; border-radius:var(--radius); width:95%; max-width:600px; max-height:90vh; overflow-y:auto; }
+    .modal-content { 
+      background:white; 
+      padding:2rem; 
+      border-radius:var(--radius); 
+      width:95%; 
+      max-width:600px; 
+      max-height:90vh; 
+      overflow-y:auto; 
+    }
     .close-modal { float:right; font-size:1.5rem; cursor:pointer; }
 
     .photo-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:0.5rem; margin-top:1rem; }
     .photo-grid img { width:100%; height:100px; object-fit:cover; border-radius:6px; cursor:pointer; }
 
     .hidden { display:none; }
-    .toast { position:fixed; top:1rem; right:1rem; background:var(--success); color:white; padding:1rem 1.5rem; border-radius:8px; box-shadow:var(--shadow-md); display:flex; align-items:center; gap:0.75rem; z-index:2000; transition:all 0.3s; }
+    .toast { 
+      position:fixed; 
+      top:1rem; 
+      right:1rem; 
+      background:var(--success); 
+      color:white; 
+      padding:1rem 1.5rem; 
+      border-radius:8px; 
+      box-shadow:var(--shadow-md); 
+      display:flex; 
+      align-items:center; 
+      gap:0.75rem; 
+      z-index:2000; 
+      transition:all 0.3s; 
+    }
     .toast.hidden { opacity:0; transform:translateY(-20px); }
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
 
     /* Responsive Optimizations */
     @media (max-width: 992px) {
       .admin-layout { flex-direction:column; }
-      .sidebar { width:100%; height:auto; position:relative; padding:1.5rem 1rem; }
-      .main-content { padding:1.5rem 1rem; }
+      
+      .sidebar { 
+        width:100%; 
+        height:auto; 
+        position:fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+      }
+      
+      .sidebar.active {
+        left: 0;
+      }
+      
+      .mobile-menu-toggle {
+        display: block;
+      }
+      
+      .main-content { 
+        padding:1.5rem 1rem;
+        margin-top: 70px;
+      }
+      
       .charts-row { grid-template-columns:1fr; }
       .mini-tables { grid-template-columns:1fr; }
-      .stats-grid { grid-template-columns:1fr 1fr; }
-      table { font-size:0.9rem; }
-      th, td { padding:0.8rem; }
+      .stats-grid { grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); }
+      
+      table { 
+        font-size:0.9rem;
+        display: block;
+        overflow-x: auto;
+      }
+      th, td { padding:0.8rem 0.5rem; }
+      
+      .header {
+        margin-top: 1rem;
+      }
     }
 
     @media (max-width: 768px) {
-      .header { flex-direction:column; align-items:stretch; gap:1.5rem; padding:1rem; }
-      .search-bar { width:100%; max-width:100%; }
-      .stats-grid { grid-template-columns:1fr; }
-      .chart-card { padding:1rem; }
+      .header { 
+        flex-direction:column; 
+        align-items:stretch; 
+        gap:1.5rem; 
+        padding:1rem; 
+      }
+      
+      .search-bar { 
+        width:100%; 
+        max-width:100%; 
+      }
+      
+      .stats-grid { 
+        grid-template-columns:1fr; 
+      }
+      
+      .chart-card { 
+        padding:1rem; 
+      }
+      
+      .user-profile {
+        justify-content: center;
+      }
+      
+      table {
+        font-size: 0.85rem;
+      }
+      
+      th, td {
+        padding: 0.6rem 0.4rem;
+      }
+      
+      .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -167,15 +337,42 @@
       .modal-content { padding:1.5rem; width:95%; }
       .photo-grid { grid-template-columns:repeat(auto-fill, minmax(80px,1fr)); }
       .photo-grid img { height:80px; }
+      
+      .date-display {
+        font-size: 0.9rem;
+      }
+      
+      .search-bar input {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+      }
+      
+      .search-btn {
+        padding: 0 1rem;
+        font-size: 0.9rem;
+      }
+      
+      table {
+        font-size: 0.8rem;
+      }
+      
+      th, td {
+        padding: 0.5rem 0.3rem;
+      }
     }
   </style>
 </head>
 <body class="admin-body">
   <div id="toast" class="toast hidden">Success!</div>
 
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <div class="admin-layout">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="logo"><h2>Siliya</h2><p>Admin Panel</p></div>
       <nav class="sidebar-nav">
         <ul class="nav-list">
@@ -199,7 +396,7 @@
           <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
         </div>
         <div class="user-profile">
-          <img href="https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg " alt="Admin" />
+          <img src="https://i.postimg.cc/SxkDMvbZ/SE-LOGO-MCKUP.jpg" alt="Admin" />
           <span id="adminName">Admin</span>
         </div>
       </header>
@@ -221,46 +418,52 @@
       <!-- Repairs -->
       <section id="repairsSection" class="content-section hidden">
         <h1>Repairs</h1>
-        <table>
-          <thead><tr><th>ID</th><th>Device</th><th>Customer</th><th>Status</th><th>Photos</th><th>Actions</th></tr></thead>
-          <tbody id="repairsBody"></tbody>
-        </table>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ID</th><th>Device</th><th>Customer</th><th>Status</th><th>Photos</th><th>Actions</th></tr></thead>
+            <tbody id="repairsBody"></tbody>
+          </table>
+        </div>
       </section>
 
       <!-- Training -->
       <section id="trainingSection" class="content-section hidden">
         <h2>Training Enrollments</h2>
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Course</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Education Level</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="trainingBody"></tbody>
-        </table>
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Course</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Education Level</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="trainingBody"></tbody>
+          </table>
+        </div>
       </section>
 
       <!-- Users -->
       <section id="usersSection" class="content-section hidden">
         <h1>Users</h1>
-        <table>
-          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
-          <tbody id="usersBody"></tbody>
-        </table>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+            <tbody id="usersBody"></tbody>
+          </table>
+        </div>
       </section>
     </main>
   </div>
 
   <!-- Enrollment Details Modal -->
-  <div id="enrollmentModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
-    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+  <div id="enrollmentModal" class="modal">
+    <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <h3 style="margin: 0;">Enrollment Details</h3>
         <button class="close-enrollment-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">&times;</button>
@@ -278,6 +481,36 @@
     </div>
   </div>
 
+  <script>
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    
+    if (mobileMenuToggle) {
+      mobileMenuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+      
+      // Close sidebar when clicking nav items on mobile
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 992) {
+            sidebar.classList.remove('active');
+          }
+        });
+      });
+      
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992 && 
+            !sidebar.contains(e.target) && 
+            !mobileMenuToggle.contains(e.target) &&
+            sidebar.classList.contains('active')) {
+          sidebar.classList.remove('active');
+        }
+      });
+    }
+  </script>
   <script type="module" src="admin1.js"></script>
 </body>
 </html>

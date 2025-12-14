@@ -18,7 +18,7 @@
     }
 
     body {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/h40z2DJ1/9a976c906aab6ab0eec7deda5a55233e.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/h40z2DJ1/9a976c906aab6ab0eec7deda5a55233e.jpg') center/cover no-repeat fixed;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,6 +117,7 @@
       margin: 20px 0;
       display: flex;
       gap: 10px;
+      justify-content: center;
     }
 
     .social-icons a {
@@ -361,6 +362,7 @@
       text-align: center;
       box-shadow: 0 15px 35px rgba(0,0,0,0.3);
       animation: modalPop 0.4s ease-out;
+      position: relative;
     }
 
     @keyframes modalPop {
@@ -380,22 +382,151 @@
       color: #aaa;
     }
 
-    /* Mobile Fixes */
+    /* Mobile Responsive Fixes */
     @media (max-width: 768px) {
-      .container { min-height: auto; width: 100%; }
-      .form-container { width: 100%; padding: 0 20px; position: relative; }
-      .toggle-container { display: none !important; }  /* Hide toggle on mobile to prevent cover */
-      body { padding: 10px; }
-      .container { border-radius: 20px; }
-      .form-container { padding: 0 20px; }
-      .social-icons { gap: 8px; }
-      .social-icons a { width: 35px; height: 35px; font-size: 1rem; }
-      .connection-status { top: 10px; left: 10px; padding: 6px 12px; font-size: 12px; }
-      .forgot-content { padding: 20px; }
-      .custom-alert { top: 10px; right: 10px; padding: 12px 20px; font-size: 0.9rem; gap: 8px; }
-      .debug-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.3rem; }
-      .debug-panel { bottom: 70px; right: 15px; padding: 12px; max-width: 320px; font-size: 11px; }
-      .debug-panel button { padding: 5px 8px; font-size: 10px; margin: 4px 2px 0; }
+      body {
+        padding: 10px;
+        background-attachment: scroll;
+      }
+
+      .container { 
+        min-height: auto; 
+        width: 100%;
+        border-radius: 20px;
+      }
+
+      .form-container { 
+        width: 100%; 
+        padding: 30px 20px;
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+
+      .sign-in {
+        position: relative;
+        display: block;
+      }
+
+      .sign-up {
+        position: relative;
+        display: none;
+      }
+
+      .container.active .sign-in {
+        display: none;
+      }
+
+      .container.active .sign-up {
+        display: block;
+      }
+
+      .toggle-container { 
+        display: none !important;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .social-icons { 
+        gap: 8px;
+      }
+
+      .social-icons a { 
+        width: 35px; 
+        height: 35px; 
+        font-size: 0.9rem;
+      }
+
+      .connection-status { 
+        top: 10px; 
+        left: 10px; 
+        padding: 6px 12px; 
+        font-size: 12px;
+      }
+
+      .forgot-content { 
+        padding: 20px;
+        max-width: 95%;
+      }
+
+      .custom-alert { 
+        top: 10px; 
+        right: 10px; 
+        padding: 12px 20px; 
+        font-size: 0.9rem; 
+        gap: 8px;
+      }
+
+      .debug-toggle { 
+        bottom: 15px; 
+        right: 15px; 
+        width: 45px; 
+        height: 45px; 
+        font-size: 1.3rem;
+      }
+
+      .debug-panel { 
+        bottom: 70px; 
+        right: 15px; 
+        padding: 12px; 
+        max-width: calc(100vw - 30px);
+        font-size: 11px;
+      }
+
+      .debug-panel button { 
+        padding: 5px 8px; 
+        font-size: 10px; 
+        margin: 4px 2px 0;
+      }
+
+      /* Add mobile toggle buttons */
+      .mobile-toggle-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      .mobile-toggle-btn {
+        background: transparent;
+        color: #2da0a8;
+        border: 2px solid #2da0a8;
+        padding: 8px 20px;
+        font-size: 0.9rem;
+      }
+
+      .mobile-toggle-btn:hover {
+        background: #2da0a8;
+        color: white;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        border-radius: 15px;
+      }
+
+      .form-container {
+        padding: 25px 15px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      input {
+        padding: 10px 15px;
+        font-size: 13px;
+      }
+
+      button {
+        padding: 10px 30px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -422,6 +553,13 @@
         <input type="password" placeholder="Confirm Password" id="signupConfirmPassword" required />
         <div class="error-message" id="signupError"></div>
         <button type="submit">Sign Up</button>
+        
+        <!-- Mobile Toggle -->
+        <div class="mobile-toggle-wrapper" style="display: none;">
+          <button type="button" class="mobile-toggle-btn" id="mobileToSignIn">
+            Already have an account? Sign In
+          </button>
+        </div>
       </form>
     </div>
 
@@ -440,10 +578,17 @@
         <div class="error-message" id="loginError"></div>
         <a href="#" id="forgotLink" style="color:#2da0a8; font-weight:500;">Forgot your password?</a>
         <button type="submit">Sign In</button>
+        
+        <!-- Mobile Toggle -->
+        <div class="mobile-toggle-wrapper" style="display: none;">
+          <button type="button" class="mobile-toggle-btn" id="mobileToSignUp">
+            Don't have an account? Sign Up
+          </button>
+        </div>
       </form>
     </div>
 
-    <!-- Toggle Panels -->
+    <!-- Toggle Panels (Desktop Only) -->
     <div class="toggle-container">
       <div class="toggle">
         <div class="toggle-panel toggle-left">
@@ -486,6 +631,32 @@
     <button onclick="checkBackendConnection()">Check Backend</button>
   </div>
 
+  <script>
+    // Show mobile toggle buttons on mobile
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll('.mobile-toggle-wrapper').forEach(el => {
+        el.style.display = 'flex';
+      });
+    }
+
+    // Mobile toggle functionality
+    document.getElementById('mobileToSignUp')?.addEventListener('click', () => {
+      document.getElementById('container').classList.add('active');
+    });
+
+    document.getElementById('mobileToSignIn')?.addEventListener('click', () => {
+      document.getElementById('container').classList.remove('active');
+    });
+
+    // Desktop toggle functionality
+    document.getElementById('register')?.addEventListener('click', () => {
+      document.getElementById('container').classList.add('active');
+    });
+
+    document.getElementById('login')?.addEventListener('click', () => {
+      document.getElementById('container').classList.remove('active');
+    });
+  </script>
   <script src="./app.js"></script>
 </body>
 </html>
