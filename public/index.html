@@ -165,19 +165,32 @@
             animation-play-state: paused;
         }
 
-        /* Navbar Enhancements */
-        .navbar {
-            animation: fadeInUp 0.6s ease-out both;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+/* Navbar Enhancements */
+.navbar {
+    animation: fadeInUp 0.6s ease-out both;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
 
-        .nav-links a {
-            position: relative;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-        }
-
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+.nav-links a {
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -632,7 +645,10 @@
                 padding: 1.5rem !important;
             }
         }
-        
+        .nav-links a i {
+    width: 24px;
+    text-align: center;
+}
         /* Tablet Styles (768px - 1024px) */
         @media (min-width: 769px) and (max-width: 1024px) {
             .services-grid {
@@ -800,7 +816,10 @@
                 color: black !important;
             }
         }
-
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
   </style>
 </head>
 <body>
@@ -820,12 +839,12 @@
                     <i class="fas fa-sign-in-alt"></i> Login
                 </a>
             </div>
-        </div>
+    
         <!-- Add this mobile toggle button -->
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
             <i class="fas fa-bars"></i>
         </button>
-    </div>
+    
         </nav>
     </header>
     
@@ -1148,36 +1167,44 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
     </div>
-    <script> 
-                document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        // Mobile Menu Toggle - COMPLETE WORKING VERSION
+        document.addEventListener('DOMContentLoaded', function() {
             const mobileToggle = document.getElementById('mobileToggle');
             const navLinks = document.getElementById('navLinks');
             
             if (mobileToggle && navLinks) {
-                // Mobile menu toggle
-                mobileToggle.addEventListener('click', function() {
+                // Toggle mobile menu
+                mobileToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     navLinks.classList.toggle('active');
                     const icon = this.querySelector('i');
-                    icon.classList.toggle('fa-bars');
-                    icon.classList.toggle('fa-times');
                     
-                    // Prevent body scroll when menu is open
-                    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                    if (navLinks.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                        document.body.classList.add('menu-open');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        document.body.classList.remove('menu-open');
+                    }
                 });
                 
-                // Close mobile menu when clicking on a link
+                // Close menu when clicking on a link
                 document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', () => {
+                    link.addEventListener('click', function() {
                         if (window.innerWidth <= 768) {
                             navLinks.classList.remove('active');
-                            mobileToggle.querySelector('i').classList.remove('fa-times');
-                            mobileToggle.querySelector('i').classList.add('fa-bars');
-                            document.body.style.overflow = '';
+                            const icon = mobileToggle.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                            document.body.classList.remove('menu-open');
                         }
                     });
                 });
                 
-                // Close menu when clicking outside on mobile
+                // Close menu when clicking outside
                 document.addEventListener('click', function(event) {
                     if (window.innerWidth <= 768 && 
                         navLinks.classList.contains('active') &&
@@ -1185,30 +1212,27 @@
                         !mobileToggle.contains(event.target)) {
                         
                         navLinks.classList.remove('active');
-                        mobileToggle.querySelector('i').classList.remove('fa-times');
-                        mobileToggle.querySelector('i').classList.add('fa-bars');
-                        document.body.style.overflow = '';
+                        const icon = mobileToggle.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        document.body.classList.remove('menu-open');
                     }
                 });
                 
-                // Close menu on window resize (if resizing to desktop)
+                // Close menu on window resize to desktop
                 let resizeTimer;
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(function() {
                         if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
                             navLinks.classList.remove('active');
-                            mobileToggle.querySelector('i').classList.remove('fa-times');
-                            mobileToggle.querySelector('i').classList.add('fa-bars');
-                            document.body.style.overflow = '';
+                            const icon = mobileToggle.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                            document.body.classList.remove('menu-open');
                         }
                     }, 250);
                 });
-            }
-            
-            // Optional: Add touch device detection for better UX
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.body.classList.add('touch-device');
             }
         });
     </script>
