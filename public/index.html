@@ -438,6 +438,369 @@
       .social-icons a { width:35px; height:35px; font-size:0.9rem; }
       .footer { padding:3rem 1rem 1rem; }
     }
+    .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+        
+        /* Mobile Menu Overlay for better touch */
+        @media (max-width: 768px) {
+            /* Fix mobile menu positioning */
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transition: 0.4s ease-in-out;
+                z-index: 999;
+                gap: 0;
+                overflow-y: auto;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 1.2rem;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .nav-links a:last-child {
+                border-bottom: none;
+                margin-top: 1rem;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                order: 2;
+            }
+            
+            .navbar .container {
+                justify-content: space-between;
+                flex-wrap: nowrap;
+            }
+            
+            .logo {
+                order: 1;
+                flex-grow: 1;
+            }
+            
+            /* Hero section mobile adjustments */
+            .hero {
+                padding: 4rem 1rem !important;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .hero p {
+                font-size: 1.1rem !important;
+                padding: 0 0.5rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .hero-actions .btn {
+                width: 100%;
+            }
+            
+            /* Services grid mobile */
+            .services-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            .service-card {
+                padding: 1.5rem !important;
+            }
+            
+            /* Training courses mobile */
+            .training-courses {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            
+            .course-card {
+                max-width: 100% !important;
+            }
+            
+            .course-img {
+                height: 200px !important;
+            }
+            
+            /* Contact methods mobile */
+            .contact-methods {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            /* About section mobile */
+            #about {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+                padding: 2rem 1rem !important;
+            }
+            
+            .about-card {
+                max-width: 100% !important;
+            }
+            
+            /* Form adjustments for mobile */
+            .repair-form-container,
+            .enrollment-form-container {
+                padding: 1.5rem !important;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+            
+            /* Repair grid mobile */
+            .repairs-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Footer mobile */
+            .footer-content {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+            
+            .footer-links ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .footer-links li {
+                margin-bottom: 0;
+            }
+            
+            /* Fix modal for mobile */
+            .modal > div {
+                width: 95% !important;
+                margin: 1rem !important;
+                padding: 1.5rem !important;
+            }
+            
+            /* Success messages mobile */
+            .repair-success,
+            .enrollment-success {
+                padding: 1.5rem !important;
+            }
+        }
+        
+        /* Tablet Styles (768px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+            }
+            
+            .training-courses {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+            }
+            
+            .contact-methods {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+            }
+            
+            #about {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+            }
+            
+            .hero h1 {
+                font-size: 3rem !important;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
+        /* Small mobile devices (below 480px) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem !important;
+            }
+            
+            .hero p {
+                font-size: 1rem !important;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem !important;
+            }
+            
+            .section-title p {
+                font-size: 1rem !important;
+            }
+            
+            .service-card,
+            .contact-card,
+            .course-card {
+                padding: 1.25rem !important;
+            }
+            
+            .service-icon,
+            .contact-icon {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 2rem !important;
+            }
+            
+            .btn {
+                padding: 0.9rem 1.5rem !important;
+                font-size: 0.95rem !important;
+            }
+            
+            .course-img {
+                height: 180px !important;
+            }
+            
+            .about-img {
+                height: 200px !important;
+            }
+            
+            .photo-preview {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            .photo-preview img {
+                height: 100px !important;
+            }
+        }
+        
+        /* Very small devices (below 360px) */
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 1.6rem !important;
+            }
+            
+            .hero p {
+                font-size: 0.95rem !important;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.2rem !important;
+                font-size: 0.9rem !important;
+            }
+            
+            .logo {
+                font-size: 1.4rem !important;
+            }
+        }
+        
+        /* Landscape mode adjustments */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                padding: 3rem 1rem !important;
+            }
+            
+            .hero h1 {
+                font-size: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .hero p {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .nav-links {
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+        }
+        
+        /* Prevent horizontal scroll on mobile */
+        body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn,
+            .form-control,
+            select,
+            input[type="file"] {
+                min-height: 44px;
+            }
+            
+            .nav-links a {
+                padding: 1rem;
+                min-height: 44px;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .navbar,
+            .hero-actions,
+            .mobile-toggle,
+            .social-icons,
+            footer,
+            .btn {
+                display: none !important;
+            }
+            
+            .hero {
+                padding: 2rem 1rem !important;
+                background: white !important;
+                color: black !important;
+            }
+            
+            .hero h1 {
+                color: black !important;
+            }
+        }
+
   </style>
 </head>
 <body>
@@ -457,9 +820,12 @@
                     <i class="fas fa-sign-in-alt"></i> Login
                 </a>
             </div>
-            <div class="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
+        </div>
+        <!-- Add this mobile toggle button -->
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
         </nav>
     </header>
     
@@ -749,7 +1115,7 @@
         <div class="footer-content">
             <div class="footer-about">
                 <h3><i class="fas fa-bolt"></i> Siliya Electricals</h3>
-                <p>Empowering communities through expert repairs and transformative training since 2010.</p>
+                <p>Empowering communities through expert repairs and transformative training since 2025.</p>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -782,7 +1148,70 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
     </div>
-    
+    <script> 
+                document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileToggle && navLinks) {
+                // Mobile menu toggle
+                mobileToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                    
+                    // Prevent body scroll when menu is open
+                    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                });
+                
+                // Close mobile menu when clicking on a link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                            mobileToggle.querySelector('i').classList.remove('fa-times');
+                            mobileToggle.querySelector('i').classList.add('fa-bars');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                });
+                
+                // Close menu when clicking outside on mobile
+                document.addEventListener('click', function(event) {
+                    if (window.innerWidth <= 768 && 
+                        navLinks.classList.contains('active') &&
+                        !navLinks.contains(event.target) &&
+                        !mobileToggle.contains(event.target)) {
+                        
+                        navLinks.classList.remove('active');
+                        mobileToggle.querySelector('i').classList.remove('fa-times');
+                        mobileToggle.querySelector('i').classList.add('fa-bars');
+                        document.body.style.overflow = '';
+                    }
+                });
+                
+                // Close menu on window resize (if resizing to desktop)
+                let resizeTimer;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function() {
+                        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileToggle.querySelector('i').classList.remove('fa-times');
+                            mobileToggle.querySelector('i').classList.add('fa-bars');
+                            document.body.style.overflow = '';
+                        }
+                    }, 250);
+                });
+            }
+            
+            // Optional: Add touch device detection for better UX
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                document.body.classList.add('touch-device');
+            }
+        });
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
