@@ -465,38 +465,42 @@
         @media (max-width: 768px) {
             /* Fix mobile menu positioning */
             .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 2rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                transition: 0.4s ease-in-out;
-                z-index: 999;
-                gap: 0;
-                overflow-y: auto;
-            }
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: white;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: 0.4s ease-in-out;
+    z-index: 999;
+    gap: 0;
+    overflow-y: auto;
+}
             
             .nav-links.active {
                 left: 0;
             }
-            
             .nav-links a {
-                width: 100%;
-                text-align: center;
-                padding: 1.2rem;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-                font-size: 1.1rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-            
+    width: 100%;
+    text-align: center;
+    padding: 1.2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.nav-links a i {
+    width: 24px;
+    min-width: 24px;
+    text-align: center;
+    display: inline-block;
+}
             .nav-links a:last-child {
                 border-bottom: none;
                 margin-top: 1rem;
@@ -828,7 +832,7 @@ body.menu-open {
             <a href="#" class="logo">
                 <i class="fas fa-bolt"></i> Siliya Electricals
             </a>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="#services"><i class="fas fa-cogs"></i> Services</a>
                 <a href="./shop.html"><i class="fas fa-shopping-cart"></i> Shop</a>
                 <a href="#repair"><i class="fas fa-tools"></i> Repairs</a>
@@ -840,10 +844,9 @@ body.menu-open {
                 </a>
             </div>
     
-        <!-- Add this mobile toggle button -->
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
-            <i class="fas fa-bars"></i>
-        </button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
     
         </nav>
     </header>
@@ -1168,26 +1171,38 @@ body.menu-open {
         <div class="spinner"></div>
     </div>
     <script>
-        // Mobile Menu Toggle - COMPLETE WORKING VERSION
+        // Mobile Menu Toggle with Debug
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Loaded');
+            
             const mobileToggle = document.getElementById('mobileToggle');
             const navLinks = document.getElementById('navLinks');
             
+            console.log('Mobile Toggle:', mobileToggle);
+            console.log('Nav Links:', navLinks);
+            
             if (mobileToggle && navLinks) {
-                // Toggle mobile menu
+                console.log('Both elements found!');
+                
                 mobileToggle.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Button clicked!');
+                    
                     navLinks.classList.toggle('active');
+                    console.log('Has active class:', navLinks.classList.contains('active'));
+                    
                     const icon = this.querySelector('i');
                     
                     if (navLinks.classList.contains('active')) {
                         icon.classList.remove('fa-bars');
                         icon.classList.add('fa-times');
                         document.body.classList.add('menu-open');
+                        console.log('Menu opened');
                     } else {
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                         document.body.classList.remove('menu-open');
+                        console.log('Menu closed');
                     }
                 });
                 
@@ -1219,7 +1234,7 @@ body.menu-open {
                     }
                 });
                 
-                // Close menu on window resize to desktop
+                // Close menu on window resize
                 let resizeTimer;
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeTimer);
@@ -1233,6 +1248,10 @@ body.menu-open {
                         }
                     }, 250);
                 });
+            } else {
+                console.error('ERROR: Elements not found!');
+                if (!mobileToggle) console.error('mobileToggle not found');
+                if (!navLinks) console.error('navLinks not found');
             }
         });
     </script>
