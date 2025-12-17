@@ -1,7 +1,8 @@
-// admin1.js – COMPLETE ES MODULE WITH ALL FUNCTIONS
+// admin1.js – COMPLETE ES MODULE WITH ALL FUNCTIONS - CORRECTED VERSION
 const BASE_URL = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000'
   : 'https://siliya-electricals.onrender.com';
+
 const els = {
   toast: document.getElementById('toast'),
   statsGrid: document.getElementById('statsGrid'),
@@ -33,6 +34,7 @@ const showToast = (msg, type = 'success') => {
   els.toast.classList.remove('hidden');
   setTimeout(() => els.toast.classList.add('hidden'), 4000);
 };
+
 // ===========================
 // ENROLLMENT DETAILS MODAL
 // ===========================
@@ -212,40 +214,36 @@ const authFetch = async (path, opts = {}) => {
 
   console.log(`✅ Success from ${path}`, json);
   
-  // ✅ Extract data property if it exists
+  // Extract data property if it exists
   return json.data || json;
 };
 
 // ===========================
-// FETCH ALL DATA - CORRECTED ENDPOINTS
+// FETCH ALL DATA
 // ===========================
 const fetchAll = async () => {
   try {
     console.log('📡 Fetching all admin data...');
 
     const [repairs, enrollments, courses, users] = await Promise.all([
-      // Get all repairs
       authFetch('/api/repairs').catch(e => { 
         console.error('❌ Repairs fetch failed:', e.message); 
         showToast('Failed to load repairs: ' + e.message, 'danger');
         return []; 
       }),
       
-      // Get all enrollments
       authFetch('/api/training/enrollments').catch(e => { 
         console.error('❌ Enrollments fetch failed:', e.message); 
         showToast('Failed to load enrollments: ' + e.message, 'danger');
         return []; 
       }),
       
-      // Get all courses
       authFetch('/api/training/courses').catch(e => { 
         console.error('❌ Courses fetch failed:', e.message); 
         showToast('Failed to load courses: ' + e.message, 'danger');
         return []; 
       }),
       
-      // Get all users
       authFetch('/api/auth/users').catch(e => { 
         console.error('❌ Users fetch failed:', e.message); 
         showToast('Failed to load users: ' + e.message, 'danger');
@@ -274,40 +272,9 @@ const fetchAll = async () => {
     showToast('Failed to load data: ' + e.message, 'danger');
   }
 };
+
 // ===========================
-// ENROLLMENT STATUS UPDATE - FIXED
-// ===========================
-document.addEventListener('change', async e => {
-  if (e.target.classList.contains('enrollment-status-select')) {
-    const id = e.target.dataset.id;
-    const newStatus = e.target.value;
-    const oldStatus = allData.enrollments.find(en => en._id === id)?.status || 'pending';
-    
-    console.log(`Updating enrollment ${id} from ${oldStatus} to ${newStatus}`);
-    
-    try {
-      const response = await authFetch(`/api/training/enrollments/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status: newStatus })
-      });
-      
-      showToast('Enrollment status updated successfully!', 'success');
-      
-      // Update local data
-      const enrollment = allData.enrollments.find(en => en._id === id);
-      if (enrollment) enrollment.status = newStatus;
-      
-      // Re-render
-      renderAll();
-      
-    } catch (err) {
-      console.error('Status update failed:', err);
-      showToast('Failed to update: ' + err.message, 'danger');
-      e.target.value = oldStatus;
-    }
-  }
-});
-// RENDER ALL UI COMPONENTS
+// RENDER DASHBOARD (Recent Items Only)
 // ===========================
 const renderAll = () => {
   // Current Date
@@ -320,7 +287,7 @@ const renderAll = () => {
     });
   }
 
-  // Stats Cards
+  // Stats Cards - ALWAYS SHOW
   if (els.statsGrid) {
     els.statsGrid.innerHTML = `
       <div class="stat-card">
@@ -342,76 +309,177 @@ const renderAll = () => {
     `;
   }
 
-  // Recent Repairs Mini Table
+  // Recent Repairs Mini Table - LATEST FIRST (Only 5)
   if (els.recentRepairs) {
-    const recent = allData.repairs.slice(-5).reverse();
-    els.recentRepairs.innerHTML = recent.length ? recent.map(r => `
-      <div class="mini-row">
-        <div class="mini-row-main">
-          ${r.deviceType || 'N/A'} – ${r.customer || r.user?.name || 'N/A'}
+    console.log('📋 Total repairs:', allData.repairs.length);
+    
+    // Sort by date (newest first) then take first 5
+    const recent = [...allData.repairs]
+      .sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.submittedDate || 0);
+        const dateB = new Date(b.createdAt || b.submittedDate || 0);
+        return dateB - dateA; // Newest first
+      })
+      .slice(0, 5);
+    
+    console.log('📋 Showing recent repairs:', recent.length);
+    
+    els.recentRepairs.innerHTML = recent.length ? recent.map(r => {
+      const date = new Date(r.createdAt || r.submittedDate);
+      const dateStr = date.toLocaleDateString('en-GB', { 
+        day: 'numeric', 
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      return `
+        <div class="mini-row">
+          <div class="mini-row-main">
+            <strong>${r.deviceType || 'Unknown'}</strong> ${r.brand || ''} ${r.model || ''}
+            <span style="color: #999; font-size: 0.85rem; margin-left: 0.5rem;">
+              ${dateStr}
+            </span>
+          </div>
+          <div class="mini-row-sub" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+            <span style="color: #666;">
+              ${r.customer || r.user?.name || 'N/A'}
+            </span>
+            <span class="status-badge status-${r.status || 'pending'}">
+              ${r.status || 'pending'}
+            </span>
+          </div>
         </div>
-        <div class="mini-row-sub">
-          <span class="status-badge status-${r.status || 'pending'}">
-            ${r.status || 'pending'}
-          </span>
-        </div>
-      </div>
-    `).join('') : '<p style="text-align:center;color:#999;">No repairs yet</p>';
+      `;
+    }).join('') : '<p style="text-align:center;color:#999;padding:1rem;">No repairs yet</p>';
   }
 
-  // Recent Enrollments Mini Table - UPDATED
-if (els.recentEnrollments) {
-  const recent = allData.enrollments.slice(-5).reverse();
-  els.recentEnrollments.innerHTML = recent.length ? recent.map(e => {
-    let courseName = e.course?.name || e.courseName || e.course || 'N/A';
-    return `
-      <div class="mini-row">
-        <div class="mini-row-main">
-          <strong>${courseName}</strong> – ${e.fullName || 'N/A'}
-          <br/>
-          <small style="color: #999;">${e.phone || 'N/A'}</small>
+  // Recent Enrollments Mini Table - LATEST FIRST (Only 5)
+  if (els.recentEnrollments) {
+    console.log('📋 Total enrollments:', allData.enrollments.length);
+    
+    // Sort by date (newest first) then take first 5
+    const recent = [...allData.enrollments]
+      .sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.enrolledDate || 0);
+        const dateB = new Date(b.createdAt || b.enrolledDate || 0);
+        return dateB - dateA; // Newest first
+      })
+      .slice(0, 5);
+    
+    console.log('📋 Showing recent enrollments:', recent.length);
+    
+    els.recentEnrollments.innerHTML = recent.length ? recent.map(e => {
+      const date = new Date(e.createdAt || e.enrolledDate);
+      const dateStr = date.toLocaleDateString('en-GB', { 
+        day: 'numeric', 
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      let courseName = e.course?.name || e.courseName || e.course || 'Unknown Course';
+      
+      return `
+        <div class="mini-row">
+          <div class="mini-row-main">
+            <strong>${courseName}</strong>
+            <span style="color: #999; font-size: 0.85rem; margin-left: 0.5rem;">
+              ${dateStr}
+            </span>
+          </div>
+          <div class="mini-row-sub" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+            <div>
+              <span style="color: #333;">${e.fullName || 'N/A'}</span>
+              <br/>
+              <small style="color: #999;">${e.phone || 'N/A'}</small>
+            </div>
+            <span class="status-badge status-${e.status || 'pending'}">
+              ${e.status || 'pending'}
+            </span>
+          </div>
         </div>
-        <div class="mini-row-sub">
-          <span class="status-badge status-${e.status || 'pending'}">
-            ${e.status || 'pending'}
-          </span>
-        </div>
-      </div>
-    `;
-  }).join('') : '<p style="text-align:center;color:#999;">No enrollments yet</p>';
-}
-  // Repairs Table
-  if (els.repairsBody) {
-    els.repairsBody.innerHTML = allData.repairs.length ? allData.repairs.map(r => `
-      <tr>
-        <td>${r._id?.slice(-6) || 'N/A'}</td>
-        <td>${r.deviceType || ''} ${r.brand || ''} ${r.model || ''}</td>
-        <td>${r.customer || r.user?.name || 'N/A'}</td>
-        <td>
-          <span class="status-badge status-${r.status || 'pending'}">
-            ${r.status || 'pending'}
-          </span>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary view-photos" data-id="${r._id}">
-            Photos (${(r.photos?.length) || 0})
-          </button>
-        </td>
-        <td>
-          <select class="status-select" data-id="${r._id}">
-            <option value="pending" ${r.status === 'pending' ? 'selected' : ''}>Pending</option>
-            <option value="in-progress" ${r.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
-            <option value="completed" ${r.status === 'completed' ? 'selected' : ''}>Completed</option>
-            <option value="cancelled" ${r.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-          </select>
-        </td>
-      </tr>
-    `).join('') : '<tr><td colspan="6" style="text-align:center;color:#999;">No repairs found</td></tr>';
+      `;
+    }).join('') : '<p style="text-align:center;color:#999;padding:1rem;">No enrollments yet</p>';
   }
 
-// Training Enrollments Table - COMPLETE WITH ALL INFO
-if (els.trainingBody) {
-  els.trainingBody.innerHTML = allData.enrollments.length ? allData.enrollments.map(e => `
+  // Render Charts on Dashboard
+  renderCharts();
+  
+  // Check which section is active and render full tables if needed
+  const activeSection = document.querySelector('.nav-item.active')?.dataset.section;
+  
+  if (activeSection === 'repairs' && els.repairsBody) {
+    renderRepairsTable();
+  }
+  
+  if (activeSection === 'training' && els.trainingBody) {
+    renderTrainingTable();
+  }
+  
+  if (activeSection === 'users' && els.usersBody) {
+    renderUsersTable();
+  }
+};
+
+// ===========================
+// RENDER FULL REPAIRS TABLE
+// ===========================
+const renderRepairsTable = () => {
+  if (!els.repairsBody) return;
+  
+  console.log('📋 Rendering full repairs table:', allData.repairs.length, 'items');
+  
+  // Sort by date (newest first)
+  const sortedRepairs = [...allData.repairs].sort((a, b) => {
+    const dateA = new Date(a.createdAt || a.submittedDate || 0);
+    const dateB = new Date(b.createdAt || b.submittedDate || 0);
+    return dateB - dateA;
+  });
+  
+  els.repairsBody.innerHTML = sortedRepairs.length ? sortedRepairs.map(r => `
+    <tr>
+      <td>${r._id?.slice(-6) || 'N/A'}</td>
+      <td>${r.deviceType || ''} ${r.brand || ''} ${r.model || ''}</td>
+      <td>${r.customer || r.user?.name || 'N/A'}</td>
+      <td>
+        <span class="status-badge status-${r.status || 'pending'}">
+          ${r.status || 'pending'}
+        </span>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-primary view-photos" data-id="${r._id}">
+          Photos (${(r.photos?.length) || 0})
+        </button>
+      </td>
+      <td>
+        <select class="status-select" data-id="${r._id}">
+          <option value="pending" ${r.status === 'pending' ? 'selected' : ''}>Pending</option>
+          <option value="in-progress" ${r.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+          <option value="completed" ${r.status === 'completed' ? 'selected' : ''}>Completed</option>
+          <option value="cancelled" ${r.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+        </select>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" style="text-align:center;color:#999;padding:2rem;">No repairs found</td></tr>';
+};
+
+// ===========================
+// RENDER FULL TRAINING TABLE
+// ===========================
+const renderTrainingTable = () => {
+  if (!els.trainingBody) return;
+  
+  console.log('📋 Rendering full training table:', allData.enrollments.length, 'items');
+  
+  // Sort by date (newest first)
+  const sortedEnrollments = [...allData.enrollments].sort((a, b) => {
+    const dateA = new Date(a.createdAt || a.enrolledDate || 0);
+    const dateB = new Date(b.createdAt || b.enrolledDate || 0);
+    return dateB - dateA;
+  });
+  
+  els.trainingBody.innerHTML = sortedEnrollments.length ? sortedEnrollments.map(e => `
     <tr>
       <td>${e._id?.slice(-6) || 'N/A'}</td>
       <td>${e.course?.name || e.courseName || e.course || 'N/A'}</td>
@@ -434,38 +502,40 @@ if (els.trainingBody) {
         </button>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="9" style="text-align:center;color:#999;">No enrollments found</td></tr>';
-}
+  `).join('') : '<tr><td colspan="8" style="text-align:center;color:#999;padding:2rem;">No enrollments found</td></tr>';
+};
 
-  // Users Table
-  if (els.usersBody) {
-    els.usersBody.innerHTML = allData.users.length ? allData.users.map(u => `
-      <tr>
-        <td>${u._id?.slice(-6) || 'N/A'}</td>
-        <td>${u.name || 'N/A'}</td>
-        <td>${u.email || 'N/A'}</td>
-        <td>
-          <span style="
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: ${u.role === 'admin' ? '#2da0a8' : '#6c757d'};
-            color: white;
-          ">${u.role || 'user'}</span>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-danger delete-user" data-id="${u._id}" 
-                  ${u.role === 'admin' ? 'disabled title="Cannot delete admin"' : ''}>
-            Delete
-          </button>
-        </td>
-      </tr>
-    `).join('') : '<tr><td colspan="5" style="text-align:center;color:#999;">No users found</td></tr>';
-  }
-
-  // Render Charts
-  renderCharts();
+// ===========================
+// RENDER FULL USERS TABLE
+// ===========================
+const renderUsersTable = () => {
+  if (!els.usersBody) return;
+  
+  console.log('📋 Rendering full users table:', allData.users.length, 'items');
+  
+  els.usersBody.innerHTML = allData.users.length ? allData.users.map(u => `
+    <tr>
+      <td>${u._id?.slice(-6) || 'N/A'}</td>
+      <td>${u.name || 'N/A'}</td>
+      <td>${u.email || 'N/A'}</td>
+      <td>
+        <span style="
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          background: ${u.role === 'admin' ? '#2da0a8' : '#6c757d'};
+          color: white;
+        ">${u.role || 'user'}</span>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-danger delete-user" data-id="${u._id}" 
+                ${u.role === 'admin' ? 'disabled title="Cannot delete admin"' : ''}>
+          Delete
+        </button>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="5" style="text-align:center;color:#999;padding:2rem;">No users found</td></tr>';
 };
 
 // ===========================
@@ -475,7 +545,16 @@ const renderCharts = () => {
   const ctx1 = document.getElementById('repairsChart')?.getContext('2d');
   const ctx2 = document.getElementById('enrollmentsChart')?.getContext('2d');
   
-  if (!ctx1 || !ctx2) return;
+  if (!ctx1 || !ctx2) {
+    console.warn('⚠️ Chart canvases not found');
+    return;
+  }
+
+  // Check if Chart.js is loaded
+  if (typeof Chart === 'undefined') {
+    console.error('❌ Chart.js not loaded!');
+    return;
+  }
 
   // Destroy existing charts
   if (charts.repairs) charts.repairs.destroy();
@@ -554,6 +633,8 @@ const renderCharts = () => {
       }
     }
   });
+  
+  console.log('📊 Charts rendered successfully');
 };
 
 // ===========================
@@ -561,14 +642,28 @@ const renderCharts = () => {
 // ===========================
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
+    console.log('📍 Navigating to:', item.dataset.section);
+    
     // Update active nav item
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
     
     // Show corresponding section
     document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-    const sec = document.getElementById(item.dataset.section + 'Section');
+    const section = item.dataset.section;
+    const sec = document.getElementById(section + 'Section');
     if (sec) sec.classList.remove('hidden');
+    
+    // Render appropriate content based on section
+    if (section === 'dashboard') {
+      renderAll(); // Shows stats + recent items + charts
+    } else if (section === 'repairs') {
+      renderRepairsTable(); // Shows full repairs table
+    } else if (section === 'training') {
+      renderTrainingTable(); // Shows full training table
+    } else if (section === 'users') {
+      renderUsersTable(); // Shows full users table
+    }
   });
 });
 
@@ -579,7 +674,7 @@ const handleSearch = () => {
   const q = (els.searchInput?.value || '').trim().toLowerCase();
   
   if (!q) {
-    renderAll();
+    renderRepairsTable();
     return;
   }
 
@@ -593,7 +688,13 @@ const handleSearch = () => {
   );
 
   if (els.repairsBody) {
-    els.repairsBody.innerHTML = filtered.length ? filtered.map(r => `
+    const sortedFiltered = filtered.sort((a, b) => {
+      const dateA = new Date(a.createdAt || a.submittedDate || 0);
+      const dateB = new Date(b.createdAt || b.submittedDate || 0);
+      return dateB - dateA;
+    });
+    
+    els.repairsBody.innerHTML = sortedFiltered.length ? sortedFiltered.map(r => `
       <tr>
         <td>${r._id?.slice(-6)}</td>
         <td>${r.deviceType} ${r.brand} ${r.model}</td>
@@ -625,13 +726,104 @@ els.searchInput?.addEventListener('keyup', e => {
 });
 
 // ===========================
-// LOGOUT
+// ENROLLMENT STATUS UPDATE
 // ===========================
-els.logoutBtn?.addEventListener('click', () => {
-  if (confirm('Are you sure you want to logout?')) {
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.href = 'login.html';
+document.addEventListener('change', async e => {
+  if (e.target.classList.contains('enrollment-status-select')) {
+    const id = e.target.dataset.id;
+    const newStatus = e.target.value;
+    const oldStatus = allData.enrollments.find(en => en._id === id)?.status || 'pending';
+    
+    console.log(`Updating enrollment ${id} from ${oldStatus} to ${newStatus}`);
+    
+    try {
+      await authFetch(`/api/training/enrollments/${id}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: newStatus })
+      });
+      
+      showToast('Enrollment status updated successfully!', 'success');
+      
+      // Update local data
+      const enrollment = allData.enrollments.find(en => en._id === id);
+      if (enrollment) enrollment.status = newStatus;
+      
+      // Re-render only training table
+      renderTrainingTable();
+      
+    } catch (err) {
+      console.error('Status update failed:', err);
+      showToast('Failed to update: ' + err.message, 'danger');
+      e.target.value = oldStatus;
+    }
+  }
+});
+
+// ===========================
+// REPAIR STATUS UPDATE
+// ===========================
+document.addEventListener('change', async e => {
+  if (e.target.classList.contains('status-select')) {
+    const id = e.target.dataset.id;
+    const newStatus = e.target.value;
+    const oldStatus = allData.repairs.find(r => r._id === id)?.status || 'pending';
+    
+    console.log(`Updating repair ${id} from ${oldStatus} to ${newStatus}`);
+    
+    try {
+      await authFetch(`/api/repairs/${id}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: newStatus })
+      });
+      
+      showToast('Repair status updated successfully!', 'success');
+      
+      // Update local data
+      const repair = allData.repairs.find(r => r._id === id);
+      if (repair) repair.status = newStatus;
+      
+      // Re-render only repairs table
+      renderRepairsTable();
+      
+    } catch (err) {
+      console.error('Status update failed:', err);
+      showToast('Failed to update: ' + err.message, 'danger');
+      e.target.value = oldStatus;
+    }
+  }
+});
+
+// ===========================
+// DELETE USER
+// ===========================
+document.addEventListener('click', async e => {
+  if (e.target.classList.contains('delete-user')) {
+    const id = e.target.dataset.id;
+    const user = allData.users.find(u => u._id === id);
+    
+    if (!user) return;
+    
+    if (user.role === 'admin') {
+      showToast('Cannot delete admin users', 'danger');
+      return;
+    }
+    
+    if (!confirm(`Are you sure you want to delete user "${user.name}"?`)) {
+      return;
+    }
+    
+    try {
+      await authFetch(`/api/auth/users/${id}`, { 
+        method: 'DELETE' 
+      });
+      
+      showToast('User deleted successfully', 'success');
+      fetchAll(); // Reload all data
+      
+    } catch (err) {
+      console.error('Delete user failed:', err);
+      showToast('Delete failed: ' + err.message, 'danger');
+    }
   }
 });
 
@@ -670,70 +862,13 @@ els.photoModal?.addEventListener('click', e => {
 });
 
 // ===========================
-// REPAIR STATUS UPDATE - FIXED ENDPOINT
+// LOGOUT
 // ===========================
-document.addEventListener('change', async e => {
-  if (e.target.classList.contains('status-select')) {
-    const id = e.target.dataset.id;
-    const newStatus = e.target.value;
-    const oldStatus = allData.repairs.find(r => r._id === id)?.status || 'pending';
-    
-    console.log(`Updating repair ${id} from ${oldStatus} to ${newStatus}`);
-    
-    try {
-      // ✅ CORRECT ENDPOINT WITH /status
-      const response = await authFetch(`/api/repairs/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status: newStatus })
-      });
-      
-      showToast('Repair status updated successfully!', 'success');
-      
-      // Update local data
-      const repair = allData.repairs.find(r => r._id === id);
-      if (repair) repair.status = newStatus;
-      
-      // Re-render
-      renderAll();
-      
-    } catch (err) {
-      console.error('Status update failed:', err);
-      showToast('Failed to update: ' + err.message, 'danger');
-      e.target.value = oldStatus;
-    }
-  }
-});
-// ===========================
-// DELETE USER
-// ===========================
-document.addEventListener('click', async e => {
-  if (e.target.classList.contains('delete-user')) {
-    const id = e.target.dataset.id;
-    const user = allData.users.find(u => u._id === id);
-    
-    if (!user) return;
-    
-    if (user.role === 'admin') {
-      showToast('Cannot delete admin users', 'danger');
-      return;
-    }
-    
-    if (!confirm(`Are you sure you want to delete user "${user.name}"?`)) {
-      return;
-    }
-    
-    try {
-      await authFetch(`/api/auth/users/${id}`, { 
-        method: 'DELETE' 
-      });
-      
-      showToast('User deleted successfully', 'success');
-      fetchAll(); // Reload data
-      
-    } catch (err) {
-      console.error('Delete user failed:', err);
-      showToast('Delete failed: ' + err.message, 'danger');
-    }
+els.logoutBtn?.addEventListener('click', () => {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = 'login.html';
   }
 });
 
